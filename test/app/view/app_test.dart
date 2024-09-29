@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:password_manager/app/app.dart';
-import 'package:password_manager/counter/counter.dart';
+import 'package:password_manager/src/app/app.dart';
+import 'package:password_manager/src/counter/counter.dart';
 
 void main() {
   group('App', () {

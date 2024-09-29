@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:password_manager/counter/counter.dart';
-import 'package:password_manager/l10n/l10n.dart';
+import 'package:password_manager/src/counter/counter.dart';
+import 'package:password_manager/src/l10n/l10n.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

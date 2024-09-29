@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:password_manager/counter/counter.dart';
-import 'package:password_manager/l10n/l10n.dart';
+import 'package:password_manager/src/counter/counter.dart';
+import 'package:password_manager/src/l10n/l10n.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
