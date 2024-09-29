@@ -24,6 +24,7 @@ migrate_working_dir/
 
 # packages file containing multi-root paths
 .packages.generated
+pubspec.lock
 
 # Flutter/Dart/Pub related
 **/doc/api/
