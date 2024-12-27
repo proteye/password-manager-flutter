@@ -5,21 +5,88 @@ publish_to: none
 
 environment:
   sdk: ^3.5.0
+  flutter: ^3.24.0
 
 dependencies:
-  bloc: ^8.1.4
   flutter:
     sdk: flutter
+
+  # Auth
+  local_auth: ^2.3.0
+
+  # Storage
+  shared_preferences: ^2.3.2
+
+  # Database
+  drift: ^2.20.3
+  drift_flutter: ^0.2.0
+  sqlite3_flutter_libs: ^0.5.24
+  sqlite3: ^2.4.6
+
+  # Networking
+  dio: ^5.3.2
+
+  # Router
+  octopus: ^0.0.9
+
+  # State management
+  control: ^0.2.0
+  bloc: ^8.1.4
   flutter_bloc: ^8.1.6
+
+  # Localization
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
 
+  # Annotation
+  json_annotation: ^4.9.0
+  meta: ^1.10.0
+
+  # Logger
+  l: ^5.0.0-pre.2
+  sentry_flutter: ^8.2.0
+
+  # Desktop
+  # flutter_desktop_context_menu: ^0.2.0
+  # win32: ^5.4.0
+  # window_manager: ^0.4.2
+  window_manager:
+    git:
+      url: https://github.com/proteye/window_manager
+      ref: feature/auto-hide-toolbar
+
+  # Utility
+  collection: ^1.17.2
+  equatable: ^2.0.5
+  # queue: ^3.1.0
+  # nanoid: ^1.0.0
+  url_launcher: ^6.1.14
+  # vector_graphics: ^1.1.7
+  # flutter_portal: ^1.1.4
+  # flutter_svg: ^2.0.10
+  path: ^1.9.0
+  path_provider: ^2.1.1
+  platform_info: ^5.0.0
+  render_metrics: ^2.0.2
+  # slugify: ^2.0.0
+  stack_trace: ^1.11.1
+  # stream_channel: ^2.1.2
+
 dev_dependencies:
+  # Unit & Widget tests for Flutter
   bloc_test: ^9.1.7
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4
+
+  # Code generation
+  build_runner: ^2.4.12
+  drift_dev: ^2.20.3
+  json_serializable: ^6.7.1
+  pubspec_generator: ^4.1.0-pre.1
+
+  # Linting
   very_good_analysis: ^6.0.0
 
 flutter:

@@ -3,6 +3,12 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  local_auth_windows
+  screen_retriever
+  sentry_flutter
+  sqlite3_flutter_libs
+  url_launcher_windows
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

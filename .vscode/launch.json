@@ -8,27 +8,37 @@
       "name": "Launch development",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
-        "--target",
-        "lib/main_development.dart"
+        "--enable-impeller",
+        "--dart-define-from-file=config/development.json",
       ]
     },
     {
       "name": "Launch staging",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_staging.dart",
-      "args": ["--flavor", "staging", "--target", "lib/main_staging.dart"]
+      "program": "lib/main.dart",
+      "args": [
+        "--flavor",
+        "staging",
+        "--enable-impeller",
+        "--dart-define-from-file=config/staging.json",
+      ]
     },
     {
       "name": "Launch production",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_production.dart",
-      "args": ["--flavor", "production", "--target", "lib/main_production.dart"]
+      "program": "lib/main.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--enable-impeller",
+        "--dart-define-from-file=config/production.json",
+      ]
     }
   ]
 }

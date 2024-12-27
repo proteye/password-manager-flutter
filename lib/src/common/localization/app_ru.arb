@@ -1,0 +1,13 @@
+{
+    "@@locale": "ru",
+    "@nMatches": {
+        "description": "A plural message of matches",
+        "placeholders": {
+            "count": {
+                "format": "compact",
+                "type": "num"
+            }
+        }
+    },
+    "nMatches": "{count, plural, =0{0 совпадений} =1{1 совпадение} few{{count} совпадения} other{{count} совпадений}}"
+}
