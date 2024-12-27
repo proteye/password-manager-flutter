@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/constant/config.dart';
+import 'package:password_manager/src/common/initialization/widgets/inherited_dependencies.dart';
 import 'package:password_manager/src/common/localization/generated/app_localizations.dart';
 import 'package:password_manager/src/common/router/router_state_mixin.dart';
+import 'package:password_manager/src/feature/settings/data/reopsitory/settings_repository.dart';
 import 'package:password_manager/src/feature/settings/widget/settings_scope.dart';
 
 class App extends StatefulWidget {
@@ -21,9 +23,9 @@ class _AppState extends State<App> with RouterStateMixin {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        // RepositoryProvider<SettingsRepository>.value(
-        //   value: InheritedDependencies.of(context).settingsRepository,
-        // ),
+        RepositoryProvider<SettingsRepository>.value(
+          value: InheritedDependencies.of(context).settingsRepository,
+        ),
         // RepositoryProvider<LibraryRepository>.value(
         //   value: InheritedDependencies.of(context).libraryRepository,
         // ),
