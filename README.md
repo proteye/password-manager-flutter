@@ -28,7 +28,7 @@ $ flutter run --flavor staging --dart-define-from-file=config/staging.json
 $ flutter run --flavor production --dart-define-from-file=config/production.json
 ```
 
-_\*Password Manager works on iOS, Android, Web, macOS and Windows._
+_\*Password Manager works on iOS, Android, macOS and Windows._
 
 ---
 
