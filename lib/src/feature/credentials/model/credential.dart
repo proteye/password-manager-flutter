@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'credential_model.g.dart';
+part 'credential.g.dart';
 
 @JsonSerializable()
 class Credential {
@@ -52,35 +52,35 @@ class Credential {
   factory Credential.fromJson(Map<String, dynamic> json) =>
       _$CredentialFromJson(json);
 
-  /// Unique ID
+  /// Unique ID.
   int id;
 
-  /// Name of resource
+  /// Name of resource.
   String name;
 
-  /// URL of resource
+  /// URL of resource.
   String url;
 
-  /// Username
+  /// Username.
   String username;
 
-  /// Password
+  /// Password.
   String password;
 
-  /// Commentary
+  /// Commentary.
   String comment;
 
-  /// User color
+  /// User color.
   String color;
 
-  /// Abbreviation
+  /// Abbreviation.
   String abbr;
 
-  /// Created date
-  DateTime createDate;
+  /// Date of creation.
+  final DateTime createDate;
 
-  /// Updated date
-  DateTime updateDate;
+  /// Date of last update.
+  final DateTime updateDate;
 
   /// Connect the generated [_$CredentialToJson] function to the `toJson`
   /// method.

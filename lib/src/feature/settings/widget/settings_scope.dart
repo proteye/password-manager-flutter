@@ -52,7 +52,6 @@ class _SettingsScopeState extends State<SettingsScope> {
   );
 
   ThemeMode _themeMode = ThemeMode.system;
-  Color _accentColor = AppearanceSettings.defaultColor;
 
   /* #region Lifecycle */
   @override
@@ -81,8 +80,8 @@ class _SettingsScopeState extends State<SettingsScope> {
     final appSettings = _settingsController.appSettings;
     final brightness = appSettings.themeMode == ThemeMode.system
         ? View.maybeOf(context)?.platformDispatcher.platformBrightness
-        : appSettings.brightness;
-    _locale = Locale(appSettings.language.name);
+        : appSettings.themeMode as Brightness;
+    _locale = Locale(appSettings.language);
     _theme = ThemeData.from(
       colorScheme: ColorScheme.fromSeed(
         brightness: brightness ?? Brightness.light,
@@ -90,15 +89,13 @@ class _SettingsScopeState extends State<SettingsScope> {
       ),
     );
     _themeMode = appSettings.themeMode;
-    _accentColor = appSettings.accentColor;
   }
 
   void _listener() {
     if (!mounted) return;
     // Global state update when language or theme or accent color changes.
-    if (_settingsController.appSettings.language.name != _locale.languageCode ||
-        _settingsController.appSettings.themeMode != _themeMode ||
-        _settingsController.appSettings.accentColor != _accentColor) {
+    if (_settingsController.appSettings.language != _locale.languageCode ||
+        _settingsController.appSettings.themeMode != _themeMode) {
       _update();
       setState(() {});
     }

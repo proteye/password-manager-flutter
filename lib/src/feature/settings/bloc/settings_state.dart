@@ -1,39 +1,28 @@
 part of 'settings_bloc.dart';
 
-enum ESettingsSection {
-  general,
-  advanced,
-  appearance,
-  textDisplay,
-  citation,
-}
-
 sealed class SettingsState extends Equatable {
   const SettingsState({
     this.appSettings,
-    this.currentSection = ESettingsSection.general,
+    this.error,
   });
 
   final AppSettings? appSettings;
-  final ESettingsSection currentSection;
+  final Object? error;
 
   @override
-  List<Object?> get props => [appSettings, currentSection];
+  List<Object?> get props => [appSettings, error];
 }
 
 final class SettingsState$Idle extends SettingsState {
   const SettingsState$Idle({
     required super.appSettings,
-    super.currentSection,
   });
 
   SettingsState$Idle copyWith({
     AppSettings? appSettings,
-    ESettingsSection? currentSection,
   }) {
     return SettingsState$Idle(
       appSettings: appSettings ?? this.appSettings,
-      currentSection: currentSection ?? this.currentSection,
     );
   }
 }
@@ -41,13 +30,12 @@ final class SettingsState$Idle extends SettingsState {
 final class SettingsState$Processing extends SettingsState {
   const SettingsState$Processing({
     super.appSettings,
-    super.currentSection,
   });
 }
 
 final class SettingsState$Failure extends SettingsState {
   const SettingsState$Failure({
     super.appSettings,
-    super.currentSection,
+    super.error,
   });
 }

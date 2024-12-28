@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:l/l.dart';
 import 'package:password_manager/src/feature/credentials/data/provider/credentials_provider.dart';
 import 'package:password_manager/src/feature/credentials/data/reopsitory/credentials_result.dart';
-import 'package:password_manager/src/feature/credentials/model/credential_model.dart';
+import 'package:password_manager/src/feature/credentials/model/credential.dart';
 
 /// {@template credentials_repository}
 /// Credentials repository of application.

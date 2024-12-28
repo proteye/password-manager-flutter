@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:password_manager/src/common/database/database.dart';
 import 'package:password_manager/src/feature/credentials/data/provider/credentials_provider.dart';
-import 'package:password_manager/src/feature/credentials/model/credential_model.dart';
+import 'package:password_manager/src/feature/credentials/model/credential.dart';
 
 /// {@macro credentials_provider}
 /// Load and save credentials to database.

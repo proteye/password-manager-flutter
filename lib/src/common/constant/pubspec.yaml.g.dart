@@ -125,12 +125,12 @@ sealed class Pubspec {
   static final DateTime timestamp = DateTime.utc(
     2024,
     12,
-    27,
+    28,
+    8,
     20,
-    9,
-    24,
-    214,
-    669,
+    28,
+    612,
+    537,
   );
 
   /// Name
@@ -411,6 +411,15 @@ sealed class Pubspec {
   static const Map<String, Object> dependencies = <String, Object>{
     'flutter': <String, Object>{
       'sdk': r'flutter',
+    },
+    'storage': <String, Object>{
+      'path': r'packages/storage/storage',
+    },
+    'persistent_storage': <String, Object>{
+      'path': r'packages/storage/persistent_storage',
+    },
+    'secure_storage': <String, Object>{
+      'path': r'packages/storage/secure_storage',
     },
     'local_auth': r'^2.3.0',
     'shared_preferences': r'^2.3.2',

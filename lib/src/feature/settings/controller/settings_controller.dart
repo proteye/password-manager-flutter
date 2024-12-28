@@ -4,6 +4,7 @@ import 'package:control/control.dart';
 import 'package:flutter/foundation.dart';
 import 'package:password_manager/src/feature/settings/controller/settings_state.dart';
 import 'package:password_manager/src/feature/settings/data/reopsitory/settings_repository.dart';
+import 'package:password_manager/src/feature/settings/data/reopsitory/settings_result.dart';
 import 'package:password_manager/src/feature/settings/model/app_settings.dart';
 
 final class SettingsController extends StateController<SettingsState>
@@ -43,8 +44,20 @@ final class SettingsController extends StateController<SettingsState>
               appSettings: state.appSettings,
             ),
           );
-          final appSettings = await _repository.loadAppSettings();
-          setState(SettingsState.idle(appSettings: appSettings));
+          final result = await _repository.loadAppSettings();
+          switch (result.runtimeType) {
+            case SettingsResult$Success:
+              setState(
+                SettingsState.idle(
+                  appSettings: (result as SettingsResult$Success).appSettings,
+                ),
+              );
+            case SettingsResult$Failure:
+              Error.throwWithStackTrace(
+                (result as SettingsResult$Failure).error ?? 'Unknown error',
+                result.stackTrace ?? StackTrace.current,
+              );
+          }
         },
         error: (error, _) async {
           setState(
@@ -66,8 +79,16 @@ final class SettingsController extends StateController<SettingsState>
               appSettings: state.appSettings,
             ),
           );
-          await _repository.saveAppSettings(appSettings);
-          setState(SettingsState.idle(appSettings: appSettings));
+          final result = await _repository.saveAppSettings(appSettings);
+          switch (result.runtimeType) {
+            case SettingsResult$Success:
+              setState(SettingsState.idle(appSettings: appSettings));
+            case SettingsResult$Failure:
+              Error.throwWithStackTrace(
+                (result as SettingsResult$Failure).error ?? 'Unknown error',
+                result.stackTrace ?? StackTrace.current,
+              );
+          }
         },
         error: (error, _) async {
           setState(

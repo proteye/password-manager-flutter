@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 
+import 'package:l/l.dart';
 import 'package:password_manager/src/common/constant/config.dart';
 import 'package:password_manager/src/common/database/database.dart';
 import 'package:password_manager/src/feature/settings/data/provider/settings_provider.dart';
@@ -33,22 +33,16 @@ class DbSettingsProvider implements SettingsProvider {
           .getSingleOrNull();
 
       if (settingsData == null) {
-        final appSettings =
-            AppSettings.defaultSettings(language: systemLanguage);
+        final appSettings = AppSettings.create(language: systemLanguage);
         await saveAppSettings(appSettings);
         return appSettings;
       }
 
       final json = jsonDecode(settingsData.jsonData) as Map<String, dynamic>;
       return AppSettings.fromJson(json);
-    } catch (e, s) {
-      developer.log(
-        '$e',
-        name: 'DbSettingsProvider.loadAppSettings',
-        error: e,
-        stackTrace: s,
-      );
-      final appSettings = AppSettings.defaultSettings(language: systemLanguage);
+    } catch (e, st) {
+      l.e(e, st);
+      final appSettings = AppSettings.create(language: systemLanguage);
       await saveAppSettings(appSettings);
       return appSettings;
     }
@@ -57,22 +51,13 @@ class DbSettingsProvider implements SettingsProvider {
   /// Save application settings to database.
   @override
   Future<void> saveAppSettings(AppSettings appSettings) async {
-    try {
-      final json = appSettings.toJson();
-      await _database.into(_database.settingsTbl).insertOnConflictUpdate(
-            SettingsTblCompanion.insert(
-              userId: Config.defaultUserId,
-              jsonData: jsonEncode(json),
-              version: Value(appSettings.version),
-            ),
-          );
-    } catch (e, s) {
-      developer.log(
-        '$e',
-        name: 'DbSettingsProvider.saveAppSettings',
-        error: e,
-        stackTrace: s,
-      );
-    }
+    final json = appSettings.toJson();
+    await _database.into(_database.settingsTbl).insertOnConflictUpdate(
+          SettingsTblCompanion.insert(
+            userId: Config.defaultUserId,
+            jsonData: jsonEncode(json),
+            version: const Value(AppSettings.version),
+          ),
+        );
   }
 }

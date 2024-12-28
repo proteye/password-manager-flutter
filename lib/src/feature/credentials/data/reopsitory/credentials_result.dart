@@ -1,4 +1,4 @@
-import 'package:password_manager/src/feature/credentials/model/credential_model.dart';
+import 'package:password_manager/src/feature/credentials/model/credential.dart';
 
 sealed class CredentialsResult {}
 
