@@ -9,10 +9,19 @@
             }
         }
     },
+    "authorization": "Авторизация",
+    "createAndRememberAMasterPassword": "Придумайте и запомните мастер-пароль",
+    "enterYourMasterPasswordToSignIn": "Введите Ваш мастер-пароль для входа",
+    "masterPassword": "Мастер-пароль",
     "nMatches": "{count, plural, =0{0 совпадений} =1{1 совпадение} few{{count} совпадения} other{{count} совпадений}}",
-    "signIn": "Авторизация",
-    "signUp": "Регистрация",
-    "masterPassword": "Мастер пароль",
-    "enterYourMasterPasswordToSignIn": "Введите Ваш мастер пароль для входа",
-    "pleaseEnterMasterPassword": "Введите мастер пароль"
+    "newMasterPassword": "Новый мастер-пароль",
+    "passwordMustBeAtLeast8CharactersLong": "Пароль должен содержать не менее 8 символов",
+    "pleaseEnterMasterPassword": "Введите мастер-пароль",
+    "pleaseRepeatMasterPassword": "Повторите мастер-пароль",
+    "registration": "Регистрация",
+    "repeatMasterPassword": "Повторите мастер-пароль",
+    "repeatYourMasterPasswordAgain": "Повторите Ваш мастер-пароль еще раз",
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться",
+    "thePasswordsDoNotMatch": "Пароли не совпадают"
 }

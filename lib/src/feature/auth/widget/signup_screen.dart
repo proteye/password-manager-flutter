@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
+import 'package:password_manager/src/common/router/routes.dart';
 import 'package:password_manager/src/common/theme/theme.dart';
+import 'package:password_manager/src/common/widget/logo.dart';
 
 /// {@template signup_screen}
 /// Signup screen widget.
@@ -18,6 +21,8 @@ class SignupScreen extends StatefulWidget {
 /// State for widget SignupScreen.
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
+  String _password = '';
+  bool _inProgress = false;
 
   /* #region Lifecycle */
   @override
@@ -46,6 +51,21 @@ class _SignupScreenState extends State<SignupScreen> {
   }
   /* #endregion */
 
+  void _submit() {
+    setState(() {
+      _inProgress = true;
+    });
+
+    _formKey.currentState?.save();
+    if (_formKey.currentState?.validate() ?? false) {
+      context.octopus.push(Routes.signin);
+    }
+
+    setState(() {
+      _inProgress = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -59,9 +79,11 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const Logo(),
+                const SizedBox(height: PmSpacing.xl4),
                 Text(
-                  l10n.signUp,
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  l10n.registration,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
                 const SizedBox(height: PmSpacing.xl4),
                 TextFormField(
@@ -70,20 +92,20 @@ class _SignupScreenState extends State<SignupScreen> {
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    hintText: l10n.masterPassword,
-                    helperText: l10n.enterYourMasterPasswordToSignIn,
+                    hintText: l10n.newMasterPassword,
+                    helperText: l10n.createAndRememberAMasterPassword,
                   ),
                   validator: (value) {
                     if ((value ?? '').isEmpty) {
                       return l10n.pleaseEnterMasterPassword;
                     }
-                    // if (_error) {
-                    //   return 'Password is invalid';
-                    // }
+                    if (value!.length < 8) {
+                      return l10n.passwordMustBeAtLeast8CharactersLong;
+                    }
                     return null;
                   },
                   onSaved: (text) {
-                    // _password = text;
+                    _password = text ?? '';
                   },
                 ),
                 const SizedBox(height: PmSpacing.xl),
@@ -93,21 +115,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    hintText: l10n.masterPassword,
-                    helperText: l10n.enterYourMasterPasswordToSignIn,
+                    hintText: l10n.repeatMasterPassword,
+                    helperText: l10n.repeatYourMasterPasswordAgain,
                   ),
                   validator: (value) {
                     if ((value ?? '').isEmpty) {
-                      return l10n.pleaseEnterMasterPassword;
+                      return l10n.pleaseRepeatMasterPassword;
                     }
-                    // if (_error) {
-                    //   return 'Password is invalid';
-                    // }
+                    if (value != _password) {
+                      return l10n.thePasswordsDoNotMatch;
+                    }
                     return null;
                   },
-                  onSaved: (text) {
-                    // _password = text;
-                  },
+                ),
+                const SizedBox(height: PmSpacing.xl4),
+                ElevatedButton(
+                  key: const ValueKey('signup'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(PmSize.btnBig),
+                    textStyle: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  onPressed: _inProgress ? null : _submit,
+                  child: Text(l10n.signUp),
                 ),
               ],
             ),

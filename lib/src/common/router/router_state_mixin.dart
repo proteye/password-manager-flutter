@@ -36,10 +36,12 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
           // Available routes for non authenticated user.
           routes: <String>{
             Routes.signin.name,
-            // Routes.signup.name,
+            Routes.signup.name,
           },
           // Default route for non authenticated user.
           signinNavigation: OctopusState.single(Routes.signin.node()),
+          // Default route for non registered user.
+          signupNavigation: OctopusState.single(Routes.signup.node()),
           // Default route for authenticated user.
           homeNavigation: OctopusState.single(Routes.home.node()),
           // Check authentication on every authentication controller

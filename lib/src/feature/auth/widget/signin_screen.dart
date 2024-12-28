@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
+import 'package:password_manager/src/common/router/routes.dart';
+import 'package:password_manager/src/common/theme/theme.dart';
+import 'package:password_manager/src/common/widget/logo.dart';
 
 /// {@template signin_screen}
 /// Signin screen widget.
@@ -17,6 +21,8 @@ class SigninScreen extends StatefulWidget {
 /// State for widget SigninScreen.
 class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
+  String _password = '';
+  bool _inProgress = false;
 
   /* #region Lifecycle */
   @override
@@ -45,6 +51,21 @@ class _SigninScreenState extends State<SigninScreen> {
   }
   /* #endregion */
 
+  void _submit() {
+    setState(() {
+      _inProgress = true;
+    });
+
+    _formKey.currentState?.save();
+    if (_formKey.currentState?.validate() ?? false) {
+      context.octopus.push(Routes.signup);
+    }
+
+    setState(() {
+      _inProgress = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -58,11 +79,13 @@ class _SigninScreenState extends State<SigninScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const Logo(),
+                const SizedBox(height: PmSpacing.xl4),
                 Text(
-                  l10n.signIn,
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  l10n.authorization,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: PmSpacing.xl4),
                 TextFormField(
                   key: const ValueKey('password'),
                   autocorrect: false,
@@ -82,8 +105,18 @@ class _SigninScreenState extends State<SigninScreen> {
                     return null;
                   },
                   onSaved: (text) {
-                    // _password = text;
+                    _password = text ?? '';
                   },
+                ),
+                const SizedBox(height: PmSpacing.xl4),
+                ElevatedButton(
+                  key: const ValueKey('signin'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(PmSize.btnBig),
+                    textStyle: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  onPressed: _inProgress ? null : _submit,
+                  child: Text(l10n.signIn),
                 ),
               ],
             ),

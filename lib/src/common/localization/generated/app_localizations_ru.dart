@@ -9,10 +9,16 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get enterYourMasterPasswordToSignIn => 'Введите Ваш мастер пароль для входа';
+  String get authorization => 'Авторизация';
 
   @override
-  String get masterPassword => 'Мастер пароль';
+  String get createAndRememberAMasterPassword => 'Придумайте и запомните мастер-пароль';
+
+  @override
+  String get enterYourMasterPasswordToSignIn => 'Введите Ваш мастер-пароль для входа';
+
+  @override
+  String get masterPassword => 'Мастер-пароль';
 
   @override
   String nMatches(num count) {
@@ -34,11 +40,32 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get pleaseEnterMasterPassword => 'Введите мастер пароль';
+  String get newMasterPassword => 'Новый мастер-пароль';
 
   @override
-  String get signIn => 'Авторизация';
+  String get passwordMustBeAtLeast8CharactersLong => 'Пароль должен содержать не менее 8 символов';
 
   @override
-  String get signUp => 'Регистрация';
+  String get pleaseEnterMasterPassword => 'Введите мастер-пароль';
+
+  @override
+  String get pleaseRepeatMasterPassword => 'Повторите мастер-пароль';
+
+  @override
+  String get registration => 'Регистрация';
+
+  @override
+  String get repeatMasterPassword => 'Повторите мастер-пароль';
+
+  @override
+  String get repeatYourMasterPasswordAgain => 'Повторите Ваш мастер-пароль еще раз';
+
+  @override
+  String get signIn => 'Войти';
+
+  @override
+  String get signUp => 'Зарегистрироваться';
+
+  @override
+  String get thePasswordsDoNotMatch => 'Пароли не совпадают';
 }

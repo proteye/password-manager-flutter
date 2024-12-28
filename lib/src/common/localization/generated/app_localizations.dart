@@ -95,16 +95,28 @@ abstract class AppLocalizations {
     Locale('ru')
   ];
 
+  /// No description provided for @authorization.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorization'**
+  String get authorization;
+
+  /// No description provided for @createAndRememberAMasterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and remember a master-password'**
+  String get createAndRememberAMasterPassword;
+
   /// No description provided for @enterYourMasterPasswordToSignIn.
   ///
   /// In en, this message translates to:
-  /// **'Enter your master password to sign in'**
+  /// **'Enter your master-password to sign in'**
   String get enterYourMasterPasswordToSignIn;
 
   /// No description provided for @masterPassword.
   ///
   /// In en, this message translates to:
-  /// **'Master password'**
+  /// **'Master-password'**
   String get masterPassword;
 
   /// A plural message of matches
@@ -113,11 +125,47 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}'**
   String nMatches(num count);
 
+  /// No description provided for @newMasterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New master-password'**
+  String get newMasterPassword;
+
+  /// No description provided for @passwordMustBeAtLeast8CharactersLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long'**
+  String get passwordMustBeAtLeast8CharactersLong;
+
   /// No description provided for @pleaseEnterMasterPassword.
   ///
   /// In en, this message translates to:
-  /// **'Please enter master password'**
+  /// **'Please enter master-password'**
   String get pleaseEnterMasterPassword;
+
+  /// No description provided for @pleaseRepeatMasterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please repeat master-password'**
+  String get pleaseRepeatMasterPassword;
+
+  /// No description provided for @registration.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get registration;
+
+  /// No description provided for @repeatMasterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat master-password'**
+  String get repeatMasterPassword;
+
+  /// No description provided for @repeatYourMasterPasswordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat your master-password again'**
+  String get repeatYourMasterPasswordAgain;
 
   /// No description provided for @signIn.
   ///
@@ -130,6 +178,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign up'**
   String get signUp;
+
+  /// No description provided for @thePasswordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passwords do not match'**
+  String get thePasswordsDoNotMatch;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

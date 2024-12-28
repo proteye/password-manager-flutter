@@ -10,13 +10,15 @@ class AuthenticationGuard extends OctopusGuard {
     required FutureOr<User> Function() getUser,
     required Set<String> routes,
     required OctopusState signinNavigation,
+    required OctopusState signupNavigation,
     required OctopusState homeNavigation,
     OctopusState? lastNavigation,
     super.refresh,
   })  : _getUser = getUser,
         _routes = routes,
         _lastNavigation = lastNavigation ?? homeNavigation,
-        _signinNavigation = signinNavigation {
+        _signinNavigation = signinNavigation,
+        _signupNavigation = signupNavigation {
     // Get the last navigation from the platform default route.
     if (lastNavigation == null) {
       try {
@@ -38,6 +40,9 @@ class AuthenticationGuard extends OctopusGuard {
 
   /// The navigation to use when the user is not authenticated.
   final OctopusState _signinNavigation;
+
+  /// The navigation to use when the user is not registered.
+  final OctopusState _signupNavigation;
 
   /// The navigation to use when the user is authenticated.
   OctopusState _lastNavigation;
@@ -67,7 +72,11 @@ class AuthenticationGuard extends OctopusGuard {
         state.removeWhere((child) => !_routes.contains(child.name));
         // Add the signin navigation if the state is empty.
         // Or return the state if it contains the signin navigation.
-        return state.isEmpty ? _signinNavigation : state;
+        return state.isEmpty
+            ? user.isRegistered
+                ? _signinNavigation
+                : _signupNavigation
+            : state;
       }
     } else {
       // New state is not an authentication navigation.
@@ -79,7 +88,7 @@ class AuthenticationGuard extends OctopusGuard {
       } else {
         // User not authenticated.
         // Replace the current navigation with the signin navigation.
-        return _signinNavigation;
+        return user.isRegistered ? _signinNavigation : _signupNavigation;
       }
     }
   }

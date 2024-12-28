@@ -1,5 +1,7 @@
 {
     "@@locale": "en",
+    "@authorization": {},
+    "@createAndRememberAMasterPassword": {},
     "@enterYourMasterPasswordToSignIn": {},
     "@masterPassword": {},
     "@nMatches": {
@@ -11,13 +13,29 @@
             }
         }
     },
+    "@newMasterPassword": {},
+    "@passwordMustBeAtLeast8CharactersLong": {},
     "@pleaseEnterMasterPassword": {},
+    "@pleaseRepeatMasterPassword": {},
+    "@registration": {},
+    "@repeatMasterPassword": {},
+    "@repeatYourMasterPasswordAgain": {},
     "@signIn": {},
     "@signUp": {},
-    "enterYourMasterPasswordToSignIn": "Enter your master password to sign in",
-    "masterPassword": "Master password",
+    "@thePasswordsDoNotMatch": {},
+    "authorization": "Authorization",
+    "createAndRememberAMasterPassword": "Create and remember a master-password",
+    "enterYourMasterPasswordToSignIn": "Enter your master-password to sign in",
+    "masterPassword": "Master-password",
     "nMatches": "{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}",
-    "pleaseEnterMasterPassword": "Please enter master password",
+    "newMasterPassword": "New master-password",
+    "passwordMustBeAtLeast8CharactersLong": "Password must be at least 8 characters long",
+    "pleaseEnterMasterPassword": "Please enter master-password",
+    "pleaseRepeatMasterPassword": "Please repeat master-password",
+    "registration": "Registration",
+    "repeatMasterPassword": "Repeat master-password",
+    "repeatYourMasterPasswordAgain": "Repeat your master-password again",
     "signIn": "Sign in",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "thePasswordsDoNotMatch": "The passwords do not match"
 }

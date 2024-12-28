@@ -9,10 +9,16 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get enterYourMasterPasswordToSignIn => 'Enter your master password to sign in';
+  String get authorization => 'Authorization';
 
   @override
-  String get masterPassword => 'Master password';
+  String get createAndRememberAMasterPassword => 'Create and remember a master-password';
+
+  @override
+  String get enterYourMasterPasswordToSignIn => 'Enter your master-password to sign in';
+
+  @override
+  String get masterPassword => 'Master-password';
 
   @override
   String nMatches(num count) {
@@ -33,11 +39,32 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get pleaseEnterMasterPassword => 'Please enter master password';
+  String get newMasterPassword => 'New master-password';
+
+  @override
+  String get passwordMustBeAtLeast8CharactersLong => 'Password must be at least 8 characters long';
+
+  @override
+  String get pleaseEnterMasterPassword => 'Please enter master-password';
+
+  @override
+  String get pleaseRepeatMasterPassword => 'Please repeat master-password';
+
+  @override
+  String get registration => 'Registration';
+
+  @override
+  String get repeatMasterPassword => 'Repeat master-password';
+
+  @override
+  String get repeatYourMasterPasswordAgain => 'Repeat your master-password again';
 
   @override
   String get signIn => 'Sign in';
 
   @override
   String get signUp => 'Sign up';
+
+  @override
+  String get thePasswordsDoNotMatch => 'The passwords do not match';
 }

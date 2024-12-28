@@ -25,9 +25,9 @@ Future<void> _desktopInitialization() async {
   //     : screenSize.width * 0.8;
   // final height = width * 0.75;
   final windowOptions = WindowOptions(
-    minimumSize: const Size(320, 240),
+    minimumSize: const Size(320, 480),
     // size: Size(width, height),
-    center: true,
+    // center: true,
     backgroundColor:
         PlatformDispatcher.instance.platformBrightness == Brightness.dark
             ? ThemeData.dark().colorScheme.surface

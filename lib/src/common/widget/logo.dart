@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:password_manager/src/common/theme/theme.dart';
 
 /// {@template logo}
-/// Bible Scripture logo image.
+/// Password Manager logo.
 /// {@endtemplate}
 class Logo extends StatelessWidget {
   /// {@macro logo}
-  const Logo({
-    this.scale = 2,
-    super.key,
-  });
-
-  /// The scale of the image.
-  final double scale;
+  const Logo({super.key});
 
   @override
-  Widget build(BuildContext context) => Image.asset(
-        'assets/images/logo.png',
-        scale: scale,
+  Widget build(BuildContext context) => const Text(
+        'Password Manager',
+        style: PmTextStyle.displayMedium32B,
       );
 }

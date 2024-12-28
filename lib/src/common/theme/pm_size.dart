@@ -35,11 +35,11 @@ abstract class PmSize {
   /// medium button (32pt)
   static const double btnMedium = 32;
 
-  /// big button (40pt)
-  static const double btnBig = 40;
+  /// big button (48pt)
+  static const double btnBig = 48;
 
-  /// FAB button (48pt)
-  static const double btnFab = 48;
+  /// FAB button (64pt)
+  static const double btnFab = 64;
 
   /// small icon-button (24pt)
   static const double btnIconSmall = 24;
