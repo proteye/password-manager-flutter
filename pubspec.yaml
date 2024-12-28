@@ -11,6 +11,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Local dependencies
+  storage:
+    path: packages/storage/storage
+  persistent_storage:
+    path: packages/storage/persistent_storage
+  secure_storage:
+    path: packages/storage/secure_storage
+
   # Auth
   local_auth: ^2.3.0
 
