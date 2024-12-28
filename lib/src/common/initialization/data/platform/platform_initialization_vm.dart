@@ -14,19 +14,19 @@ Future<void> _mobileInitialization() async {}
 
 Future<void> _desktopInitialization() async {
   await windowManager.ensureInitialized();
-  final screens = PlatformDispatcher.instance.displays;
-  final pixelRatio = screens.first.devicePixelRatio;
-  final screenSize = Size(
-    screens.first.size.width / pixelRatio,
-    screens.first.size.height / pixelRatio,
-  );
-  final width = screenSize.width > Config.minScreenWidth
-      ? screenSize.width * 0.6
-      : screenSize.width * 0.8;
-  final height = width * 0.75;
+  // final screens = PlatformDispatcher.instance.displays;
+  // final pixelRatio = screens.first.devicePixelRatio;
+  // final screenSize = Size(
+  //   screens.first.size.width / pixelRatio,
+  //   screens.first.size.height / pixelRatio,
+  // );
+  // final width = screenSize.width > Config.minScreenWidth
+  //     ? screenSize.width * 0.6
+  //     : screenSize.width * 0.8;
+  // final height = width * 0.75;
   final windowOptions = WindowOptions(
-    minimumSize: const Size(640, 480),
-    size: Size(width, height),
+    minimumSize: const Size(320, 240),
+    // size: Size(width, height),
     center: true,
     backgroundColor:
         PlatformDispatcher.instance.platformBrightness == Brightness.dark

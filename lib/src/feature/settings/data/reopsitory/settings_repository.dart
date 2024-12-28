@@ -24,7 +24,7 @@ abstract class SettingsRepository {
 
   /// Load application settings from current provider.
   /// Create default settings if not exists.
-  Future<SettingsResult> loadAppSettings();
+  Future<SettingsResult> restoreAppSettings();
 
   /// Save application settings to current provider.
   Future<SettingsResult> saveAppSettings(AppSettings settings);
@@ -56,7 +56,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
   Stream<AppSettings> get settingsChanges => _settingsController.stream;
 
   @override
-  Future<SettingsResult> loadAppSettings() async {
+  Future<SettingsResult> restoreAppSettings() async {
     try {
       final settings = await _provider.loadAppSettings();
       _settingsController.add(_appSettings = settings);

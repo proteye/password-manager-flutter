@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:password_manager/src/feature/auth/constant/auth_config.dart';
 import 'package:password_manager/src/feature/auth/data/provider/auth_provider.dart';
+import 'package:password_manager/src/feature/auth/model/user.dart';
 import 'package:secure_storage/secure_storage.dart';
 
 /// {@macro auth_provider}
@@ -14,22 +17,17 @@ class SecureAuthProvider implements AuthProvider {
   final SecureStorage storage;
 
   @override
-  Future<String?> loadMasterPassword() {
-    return storage.read(key: AuthConfig.masterPasswordKey);
+  Future<User?> restoreUser() async {
+    final json = await storage.read(key: AuthConfig.userKey);
+    if (json == null) return null;
+    return User.fromJson(jsonDecode(json) as Map<String, Object?>);
   }
 
   @override
-  Future<String?> loadPinCode() {
-    return storage.read(key: AuthConfig.pinCodeKey);
-  }
-
-  @override
-  Future<void> saveMasterPassword(String password) async {
-    await storage.write(key: AuthConfig.masterPasswordKey, value: password);
-  }
-
-  @override
-  Future<void> savePinCode(String pinCode) async {
-    await storage.write(key: AuthConfig.pinCodeKey, value: pinCode);
+  Future<void> updateUser(User user) async {
+    await storage.write(
+      key: AuthConfig.userKey,
+      value: jsonEncode(user.toJson()),
+    );
   }
 }

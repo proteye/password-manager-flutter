@@ -44,7 +44,7 @@ final class SettingsController extends StateController<SettingsState>
               appSettings: state.appSettings,
             ),
           );
-          final result = await _repository.loadAppSettings();
+          final result = await _repository.restoreAppSettings();
           switch (result.runtimeType) {
             case SettingsResult$Success:
               setState(

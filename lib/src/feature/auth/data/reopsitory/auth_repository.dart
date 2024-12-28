@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:l/l.dart';
 import 'package:password_manager/src/feature/auth/data/provider/auth_provider.dart';
+import 'package:password_manager/src/feature/auth/model/user.dart';
 
 part 'auth_repository_result.dart';
 
@@ -17,23 +18,26 @@ abstract class AuthRepository {
         provider: provider,
       );
 
-  /// Current master password.
-  String get masterPassword;
+  /// Stream of user changes.
+  Stream<User> userChanges();
 
-  /// Current pin code.
-  String get pinCode;
+  /// Get current user.
+  FutureOr<User> getUser();
 
   /// Load pin code from current provider.
-  Future<AuthRepositoryResult> loadPinCode();
+  Future<AuthRepositoryResult> restoreUser();
 
   /// Save pin code to current provider.
-  Future<AuthRepositoryResult> savePinCode(String pinCode);
+  Future<AuthRepositoryResult> updateUser(User user);
 
-  /// Load master password from current provider.
-  Future<AuthRepositoryResult> loadMasterPassword();
+  /// Sign in to application.
+  Future<AuthRepositoryResult> signIn({
+    String? masterPassword,
+    String? pinCode,
+  });
 
-  /// Save master password to current provider.
-  Future<AuthRepositoryResult> saveMasterPassword(String password);
+  /// Sign out from application.
+  Future<AuthRepositoryResult> signOut();
 }
 
 /// {@macro auth_repository}
@@ -46,21 +50,25 @@ class AuthRepositoryImpl implements AuthRepository {
   /// {@macro auth_provider}
   final AuthProvider _provider;
 
-  String _masterPassword = '';
-  String _pinCode = '';
+  final StreamController<User> _userController =
+      StreamController<User>.broadcast();
+
+  User _user = const User.unauthenticated(isRegistered: false);
 
   @override
-  String get masterPassword => _masterPassword;
+  FutureOr<User> getUser() => _user;
 
   @override
-  String get pinCode => _pinCode;
+  Stream<User> userChanges() => _userController.stream;
 
   @override
-  Future<AuthRepositoryResult> loadMasterPassword() async {
+  Future<AuthRepositoryResult> restoreUser() async {
     try {
-      _masterPassword = await _provider.loadMasterPassword() ?? '';
+      final user = await _provider.restoreUser() ??
+          const User.unauthenticated(isRegistered: false);
+      _userController.add(_user = user);
       return AuthRepositoryResult$Success(
-        masterPassword: _masterPassword,
+        user: user,
       );
     } catch (e, st) {
       l.e(e, st);
@@ -72,11 +80,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AuthRepositoryResult> loadPinCode() async {
+  Future<AuthRepositoryResult> updateUser(User user) async {
     try {
-      _pinCode = await _provider.loadPinCode() ?? '';
+      await _provider.updateUser(user);
+      _userController.add(_user = user);
       return AuthRepositoryResult$Success(
-        pinCode: _pinCode,
+        user: user,
       );
     } catch (e, st) {
       l.e(e, st);
@@ -88,36 +97,24 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AuthRepositoryResult> saveMasterPassword(String password) async {
-    try {
-      _masterPassword = password;
-      await _provider.saveMasterPassword(password);
-      return AuthRepositoryResult$Success(
-        masterPassword: password,
-      );
-    } catch (e, st) {
-      l.e(e, st);
-      return AuthRepositoryResult$Failure(
-        error: e,
-        stackTrace: st,
-      );
+  Future<AuthRepositoryResult> signIn({
+    String? masterPassword,
+    String? pinCode,
+  }) async {
+    if (masterPassword != null) {
+      return AuthRepositoryResult$Success(user: _user);
+    } else if (pinCode != null && pinCode == _user.pinCode) {
+      return AuthRepositoryResult$Success(user: _user);
     }
+    return AuthRepositoryResult$Failure(error: 'Invalid credentials');
   }
 
   @override
-  Future<AuthRepositoryResult> savePinCode(String code) async {
-    try {
-      _pinCode = code;
-      await _provider.savePinCode(code);
-      return AuthRepositoryResult$Success(
-        pinCode: pinCode,
+  Future<AuthRepositoryResult> signOut() => Future<AuthRepositoryResult>.sync(
+        () {
+          const user = User.unauthenticated(isRegistered: true);
+          _userController.add(_user = user);
+          return AuthRepositoryResult$Success(user: user);
+        },
       );
-    } catch (e, st) {
-      l.e(e, st);
-      return AuthRepositoryResult$Failure(
-        error: e,
-        stackTrace: st,
-      );
-    }
-  }
 }

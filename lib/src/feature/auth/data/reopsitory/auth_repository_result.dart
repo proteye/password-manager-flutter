@@ -8,15 +8,11 @@ sealed class AuthRepositoryResult {}
 /// {@macro auth_repository_result}
 class AuthRepositoryResult$Success extends AuthRepositoryResult {
   AuthRepositoryResult$Success({
-    this.masterPassword = '',
-    this.pinCode = '',
+    this.user,
   });
 
-  /// Master password.
-  final String masterPassword;
-
-  /// Pin code.
-  final String pinCode;
+  /// Current user.
+  final User? user;
 }
 
 /// {@macro auth_repository_result}

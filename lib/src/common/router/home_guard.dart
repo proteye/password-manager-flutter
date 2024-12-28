@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/router/routes.dart';
+import 'package:password_manager/src/feature/auth/model/user.dart';
 
 /// Check routes always contain the home route at the first position.
 class HomeGuard extends OctopusGuard {
@@ -15,6 +16,12 @@ class HomeGuard extends OctopusGuard {
     OctopusState$Mutable state,
     Map<String, Object?> context,
   ) {
+    // If the user is not authenticated, do nothing.
+    // The home route should not be in the state.
+    if (context['user'] case final User user) if (!user.isAuthenticated) {
+      return state;
+    }
+
     // Home route should be the first route in the state
     // and should be only one in whole state.
     if (state.isEmpty) return _fix(state);

@@ -1,31 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
-/// {@template settings_screen}
-/// Settings screen.
+/// {@template credentials_screen}
+/// CredentialsScreen widget.
 /// {@endtemplate}
-class SettingsScreen extends StatefulWidget {
-  /// {@macro settings_screen}
-  const SettingsScreen({super.key});
+class CredentialsScreen extends StatefulWidget {
+  /// {@macro credentials_screen}
+  const CredentialsScreen({
+    super.key, // ignore: unused_element
+  });
+
+  /// The state from the closest instance of this class
+  /// that encloses the given context, if any.
+  @internal
+  static _CredentialsScreenState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<_CredentialsScreenState>();
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<CredentialsScreen> createState() => _CredentialsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+/// State for widget CredentialsScreen.
+class _CredentialsScreenState extends State<CredentialsScreen> {
+  /* #region Lifecycle */
   @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-    // return ui.Modal(
-    //   closeButtonTooltip: context.l10n.close,
-    //   content: BlocProvider<SettingsBloc>(
-    //     create: (_) => SettingsBloc(
-    //       settingsRepository: Dependencies.of(context).settingsRepository,
-    //       libraryRepository: Dependencies.of(context).libraryRepository,
-    //     )
-    //       // Load initial settings.
-    //       ..add(const SettingsEvent$Load()),
-    //     child: const _SettingsView(),
-    //   ),
-    // );
+  void initState() {
+    super.initState();
+    // Initial state initialization
   }
+
+  @override
+  void didUpdateWidget(covariant CredentialsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Widget configuration changed
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // The configuration of InheritedWidgets has changed
+    // Also called after initState but before build
+  }
+
+  @override
+  void dispose() {
+    // Permanent removal of a tree stent
+    super.dispose();
+  }
+  /* #endregion */
+
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }

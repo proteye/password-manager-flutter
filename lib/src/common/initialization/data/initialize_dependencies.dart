@@ -18,9 +18,13 @@ import 'package:password_manager/src/common/model/dependencies.dart';
 import 'package:password_manager/src/common/util/dio_proxy.dart';
 import 'package:password_manager/src/common/util/http_log_interceptor.dart';
 import 'package:password_manager/src/common/util/screen_util.dart';
+import 'package:password_manager/src/feature/auth/controller/auth_controller.dart';
+import 'package:password_manager/src/feature/auth/data/provider/secure_auth_provider.dart';
+import 'package:password_manager/src/feature/auth/data/reopsitory/auth_repository.dart';
 import 'package:password_manager/src/feature/settings/data/provider/db_settings_provider.dart';
 import 'package:password_manager/src/feature/settings/settings.dart';
 import 'package:platform_info/platform_info.dart';
+import 'package:secure_storage/secure_storage.dart';
 // import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -79,9 +83,9 @@ final Map<String, _InitializationStep> _initializationSteps =
         deviceScreenSize: ScreenUtil.screenSize().representation,
       ),
   // 'Observer state managment': (_) =>Controller.observer=ControllerObserver(),
-  'Initializing analytics': (_) {},
-  'Log app open': (_) {},
-  'Get remote config': (_) {},
+  // 'Initializing analytics': (_) {},
+  // 'Log app open': (_) {},
+  // 'Get remote config': (_) {},
   'Initialize shared preferences': (dependencies) async =>
       dependencies.sharedPreferences = await SharedPreferences.getInstance(),
   'Connect to database': (dependencies) => (dependencies.database =
@@ -147,14 +151,15 @@ final Map<String, _InitializationStep> _initializationSteps =
       // ),
     ]);
   },
-  // 'Prepare authentication controller': (dependencies) =>
-  //     dependencies.authenticationController = AuthenticationController(
-  //       repository: AuthenticationRepositoryImpl(
-  //         sharedPreferences: dependencies.sharedPreferences,
-  //       ),
-  //     ),
-  // 'Restore last user': (dependencies) =>
-  //     dependencies.authenticationController.restore(),
+  'Prepare authentication controller': (dependencies) =>
+      dependencies.authController = AuthController(
+        repository: AuthRepository.createInstance(
+          provider: SecureAuthProvider(
+            storage: const SecureStorage(),
+          ),
+        ),
+      ),
+  'Restore last user': (dependencies) => dependencies.authController.restore(),
   'Initialize BlocObserver': (dependencies) async {
     Bloc.observer = AppBlocObserver();
   },
@@ -182,8 +187,8 @@ final Map<String, _InitializationStep> _initializationSteps =
         systemLanguage: defaultLocale?.languageCode,
       ),
     );
-    // Load current settings of application.
-    await dependencies.settingsRepository.loadAppSettings();
+    // Restore current settings of application.
+    await dependencies.settingsRepository.restoreAppSettings();
   },
   'Restore library': (dependencies) async {
     // dependencies.libraryRepository = LibraryRepository.createInstance(

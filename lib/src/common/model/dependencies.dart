@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:password_manager/src/common/database/database.dart';
 import 'package:password_manager/src/common/initialization/widgets/inherited_dependencies.dart';
 import 'package:password_manager/src/common/model/app_metadata.dart';
+import 'package:password_manager/src/feature/auth/controller/auth_controller.dart';
 import 'package:password_manager/src/feature/settings/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,8 +27,8 @@ abstract interface class Dependencies {
   /// API Client
   abstract final Dio dio;
 
-  /// Cache repository
-  // abstract final CacheRepository cacheRepository;
+  /// Auth controller
+  abstract final AuthController authController;
 
   /// Settings repository
   abstract final SettingsRepository settingsRepository;
@@ -52,7 +53,7 @@ final class $MutableDependencies implements Dependencies {
   late Dio dio;
 
   @override
-  // late CacheRepository cacheRepository;
+  late AuthController authController;
 
   @override
   late SettingsRepository settingsRepository;
@@ -62,7 +63,7 @@ final class $MutableDependencies implements Dependencies {
         sharedPreferences: sharedPreferences,
         database: database,
         dio: dio,
-        // cacheRepository: cacheRepository,
+        authController: authController,
         settingsRepository: settingsRepository,
       );
 }
@@ -73,7 +74,7 @@ final class _$ImmutableDependencies implements Dependencies {
     required this.sharedPreferences,
     required this.database,
     required this.dio,
-    // required this.cacheRepository,
+    required this.authController,
     required this.settingsRepository,
   });
 
@@ -89,8 +90,8 @@ final class _$ImmutableDependencies implements Dependencies {
   @override
   final Dio dio;
 
-  // @override
-  // final CacheRepository cacheRepository;
+  @override
+  final AuthController authController;
 
   @override
   final SettingsRepository settingsRepository;
