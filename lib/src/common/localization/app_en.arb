@@ -1,5 +1,7 @@
 {
     "@@locale": "en",
+    "@enterYourMasterPasswordToSignIn": {},
+    "@masterPassword": {},
     "@nMatches": {
         "description": "A plural message of matches",
         "placeholders": {
@@ -9,5 +11,13 @@
             }
         }
     },
-    "nMatches": "{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}"
+    "@pleaseEnterMasterPassword": {},
+    "@signIn": {},
+    "@signUp": {},
+    "enterYourMasterPasswordToSignIn": "Enter your master password to sign in",
+    "masterPassword": "Master password",
+    "nMatches": "{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}",
+    "pleaseEnterMasterPassword": "Please enter master password",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:l/l.dart';
 import 'package:password_manager/src/feature/auth/data/provider/auth_provider.dart';
+import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
 import 'package:password_manager/src/feature/auth/model/user.dart';
 
 part 'auth_repository_result.dart';
@@ -31,10 +32,7 @@ abstract class AuthRepository {
   Future<AuthRepositoryResult> updateUser(User user);
 
   /// Sign in to application.
-  Future<AuthRepositoryResult> signIn({
-    String? masterPassword,
-    String? pinCode,
-  });
+  Future<AuthRepositoryResult> signIn(SignInData data);
 
   /// Sign out from application.
   Future<AuthRepositoryResult> signOut();
@@ -97,13 +95,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AuthRepositoryResult> signIn({
-    String? masterPassword,
-    String? pinCode,
-  }) async {
-    if (masterPassword != null) {
+  Future<AuthRepositoryResult> signIn(SignInData data) async {
+    if (data.masterPassword != null) {
       return AuthRepositoryResult$Success(user: _user);
-    } else if (pinCode != null && pinCode == _user.pinCode) {
+    } else if (data.pinCode != null && data.pinCode == _user.pinCode) {
       return AuthRepositoryResult$Success(user: _user);
     }
     return AuthRepositoryResult$Failure(error: 'Invalid credentials');

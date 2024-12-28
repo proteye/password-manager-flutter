@@ -95,11 +95,41 @@ abstract class AppLocalizations {
     Locale('ru')
   ];
 
+  /// No description provided for @enterYourMasterPasswordToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your master password to sign in'**
+  String get enterYourMasterPasswordToSignIn;
+
+  /// No description provided for @masterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Master password'**
+  String get masterPassword;
+
   /// A plural message of matches
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}'**
   String nMatches(num count);
+
+  /// No description provided for @pleaseEnterMasterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter master password'**
+  String get pleaseEnterMasterPassword;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

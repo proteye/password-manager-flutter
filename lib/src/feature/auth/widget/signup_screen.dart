@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
+import 'package:password_manager/src/common/theme/theme.dart';
 
-/// {@template signin_screen}
-/// Signin screen widget.
+/// {@template signup_screen}
+/// Signup screen widget.
 /// {@endtemplate}
-class SigninScreen extends StatefulWidget {
-  /// {@macro signin_screen}
-  const SigninScreen({
+class SignupScreen extends StatefulWidget {
+  /// {@macro signup_screen}
+  const SignupScreen({
     super.key, // ignore: unused_element
   });
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-/// State for widget SigninScreen.
-class _SigninScreenState extends State<SigninScreen> {
+/// State for widget SignupScreen.
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   /* #region Lifecycle */
@@ -26,7 +27,7 @@ class _SigninScreenState extends State<SigninScreen> {
   }
 
   @override
-  void didUpdateWidget(covariant SigninScreen oldWidget) {
+  void didUpdateWidget(covariant SignupScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Widget configuration changed
   }
@@ -59,12 +60,35 @@ class _SigninScreenState extends State<SigninScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  l10n.signIn,
+                  l10n.signUp,
                   style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: PmSpacing.xl4),
                 TextFormField(
                   key: const ValueKey('password'),
+                  autocorrect: false,
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    hintText: l10n.masterPassword,
+                    helperText: l10n.enterYourMasterPasswordToSignIn,
+                  ),
+                  validator: (value) {
+                    if ((value ?? '').isEmpty) {
+                      return l10n.pleaseEnterMasterPassword;
+                    }
+                    // if (_error) {
+                    //   return 'Password is invalid';
+                    // }
+                    return null;
+                  },
+                  onSaved: (text) {
+                    // _password = text;
+                  },
+                ),
+                const SizedBox(height: PmSpacing.xl),
+                TextFormField(
+                  key: const ValueKey('confirmPassword'),
                   autocorrect: false,
                   obscureText: true,
                   keyboardType: TextInputType.text,

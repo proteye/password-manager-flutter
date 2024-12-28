@@ -9,5 +9,10 @@
             }
         }
     },
-    "nMatches": "{count, plural, =0{0 совпадений} =1{1 совпадение} few{{count} совпадения} other{{count} совпадений}}"
+    "nMatches": "{count, plural, =0{0 совпадений} =1{1 совпадение} few{{count} совпадения} other{{count} совпадений}}",
+    "signIn": "Авторизация",
+    "signUp": "Регистрация",
+    "masterPassword": "Мастер пароль",
+    "enterYourMasterPasswordToSignIn": "Введите Ваш мастер пароль для входа",
+    "pleaseEnterMasterPassword": "Введите мастер пароль"
 }

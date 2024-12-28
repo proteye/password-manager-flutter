@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:password_manager/src/common/model/dependencies.dart';
+import 'package:password_manager/src/common/theme/theme.dart';
 import 'package:password_manager/src/feature/settings/controller/settings_controller.dart';
 import 'package:password_manager/src/feature/settings/model/app_settings.dart';
 
@@ -45,11 +46,7 @@ class _SettingsScopeState extends State<SettingsScope> {
   late final SettingsController _settingsController;
 
   Locale _locale = const Locale('en');
-  ThemeData _theme = ThemeData.from(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.blue,
-    ),
-  );
+  ThemeData _theme = PmTheme.light;
 
   ThemeMode _themeMode = ThemeMode.system;
 
@@ -82,12 +79,7 @@ class _SettingsScopeState extends State<SettingsScope> {
         ? View.maybeOf(context)?.platformDispatcher.platformBrightness
         : appSettings.themeMode as Brightness;
     _locale = Locale(appSettings.language);
-    _theme = ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(
-        brightness: brightness ?? Brightness.light,
-        seedColor: Colors.blue,
-      ),
-    );
+    _theme = PmTheme.themeByBrightness(brightness);
     _themeMode = appSettings.themeMode;
   }
 

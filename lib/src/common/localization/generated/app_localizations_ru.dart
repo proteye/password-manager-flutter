@@ -9,6 +9,12 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
+  String get enterYourMasterPasswordToSignIn => 'Введите Ваш мастер пароль для входа';
+
+  @override
+  String get masterPassword => 'Мастер пароль';
+
+  @override
   String nMatches(num count) {
     final intl.NumberFormat countNumberFormat = intl.NumberFormat.compact(
       locale: localeName,
@@ -26,4 +32,13 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get pleaseEnterMasterPassword => 'Введите мастер пароль';
+
+  @override
+  String get signIn => 'Авторизация';
+
+  @override
+  String get signUp => 'Регистрация';
 }

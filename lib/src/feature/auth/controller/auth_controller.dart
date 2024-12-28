@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:control/control.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_state.dart';
 import 'package:password_manager/src/feature/auth/data/reopsitory/auth_repository.dart';
+import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
 import 'package:password_manager/src/feature/auth/model/user.dart';
 
 final class AuthController extends StateController<AuthenticationState>
@@ -49,50 +50,50 @@ final class AuthController extends StateController<AuthenticationState>
       );
 
   /// Sign in with the given [data].
-  // void signIn(SignInData data) => handle(
-  //       () async {
-  //         setState(
-  //           AuthenticationState.processing(
-  //             user: state.user,
-  //             message: 'Logging in...',
-  //           ),
-  //         );
-  //         await _repository.signIn(data);
-  //       },
-  //       (error, _) => setState(
-  //         AuthenticationState.idle(
-  //           user: state.user,
-  //           error: 'Sign In Error', // ErrorUtil.formatMessage(error)
-  //         ),
-  //       ),
-  //       () => setState(
-  //         AuthenticationState.idle(user: state.user),
-  //       ),
-  //     );
+  void signIn(SignInData data) => handle(
+        () async {
+          setState(
+            AuthenticationState.processing(
+              user: state.user,
+              message: 'Logging in...',
+            ),
+          );
+          await _repository.signIn(data);
+        },
+        error: (error, _) async => setState(
+          AuthenticationState.idle(
+            user: state.user,
+            error: 'Sign In Error', // ErrorUtil.formatMessage(error)
+          ),
+        ),
+        done: () async => setState(
+          AuthenticationState.idle(user: state.user),
+        ),
+      );
 
   /// Sign out.
-  // void signOut() => handle(
-  //       () async {
-  //         setState(
-  //           AuthenticationState.processing(
-  //             user: state.user,
-  //             message: 'Logging out...',
-  //           ),
-  //         );
-  //         await _repository.signOut();
-  //       },
-  //       (error, _) => setState(
-  //         AuthenticationState.idle(
-  //           user: state.user,
-  //           error: 'Log Out Error', // ErrorUtil.formatMessage(error)
-  //         ),
-  //       ),
-  //       () => setState(
-  //         const AuthenticationState.idle(
-  //           user: User.unauthenticated(),
-  //         ),
-  //       ),
-  //     );
+  void signOut() => handle(
+        () async {
+          setState(
+            AuthenticationState.processing(
+              user: state.user,
+              message: 'Logging out...',
+            ),
+          );
+          await _repository.signOut();
+        },
+        error: (error, _) async => setState(
+          AuthenticationState.idle(
+            user: state.user,
+            error: 'Sign Out Error', // ErrorUtil.formatMessage(error)
+          ),
+        ),
+        done: () async => setState(
+          const AuthenticationState.idle(
+            user: User.unauthenticated(isRegistered: true),
+          ),
+        ),
+      );
 
   @override
   void dispose() {

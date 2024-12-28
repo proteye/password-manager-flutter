@@ -70,6 +70,12 @@ class AppSettings {
   /// method.
   Map<String, dynamic> toJson() => _$AppSettingsToJson(this);
 
+  /// Check if the app is in light mode.
+  bool get isLightMode => themeMode == ThemeMode.light;
+
+  /// Check if the app is in dark mode.
+  bool get isDarkMode => themeMode == ThemeMode.dark;
+
   /// Settings model version.
   static const int version = 1;
 

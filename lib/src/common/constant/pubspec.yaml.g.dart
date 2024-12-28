@@ -126,11 +126,11 @@ sealed class Pubspec {
     2024,
     12,
     28,
-    8,
-    20,
-    28,
-    612,
-    537,
+    15,
+    4,
+    5,
+    970,
+    381,
   );
 
   /// Name
@@ -448,6 +448,7 @@ sealed class Pubspec {
     },
     'collection': r'^1.17.2',
     'equatable': r'^2.0.5',
+    'encrypt': r'^5.0.3',
     'url_launcher': r'^6.1.14',
     'path': r'^1.9.0',
     'path_provider': r'^2.1.1',
