@@ -61,16 +61,18 @@ final class AuthController extends StateController<AuthenticationState>
               message: 'Logging in...',
             ),
           );
-          await _repository.signIn(data);
+          final result = await _repository.signIn(data);
+          if (result is AuthRepositoryResult$Success) {
+            setState(AuthenticationState.idle(user: result.user));
+          } else {
+            throw Exception();
+          }
         },
         error: (error, _) async => setState(
           AuthenticationState.idle(
             user: state.user,
             error: 'Sign In Error',
           ),
-        ),
-        done: () async => setState(
-          AuthenticationState.idle(user: state.user),
         ),
       );
 
@@ -115,11 +117,11 @@ final class AuthController extends StateController<AuthenticationState>
             error: 'Sign Out Error',
           ),
         ),
-        done: () async => setState(
-          const AuthenticationState.idle(
-            user: User.unauthenticated(isRegistered: true),
-          ),
-        ),
+        // done: () async => setState(
+        //   const AuthenticationState.idle(
+        //     user: User.unauthenticated(isRegistered: true),
+        //   ),
+        // ),
       );
 
   @override

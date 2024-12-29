@@ -14,6 +14,7 @@
         }
     },
     "@newMasterPassword": {},
+    "@passwordIsInvalid": {},
     "@passwordMustBeAtLeast8CharactersLong": {},
     "@pleaseEnterMasterPassword": {},
     "@pleaseRepeatMasterPassword": {},
@@ -29,6 +30,7 @@
     "masterPassword": "Master-password",
     "nMatches": "{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}",
     "newMasterPassword": "New master-password",
+    "passwordIsInvalid": "Password is invalid",
     "passwordMustBeAtLeast8CharactersLong": "Password must be at least 8 characters long",
     "pleaseEnterMasterPassword": "Please enter master-password",
     "pleaseRepeatMasterPassword": "Please repeat master-password",

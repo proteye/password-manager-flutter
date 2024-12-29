@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
-import 'package:password_manager/src/common/router/routes.dart';
 import 'package:password_manager/src/common/theme/theme.dart';
 import 'package:password_manager/src/common/widget/logo.dart';
+import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
+import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
 
 /// {@template signin_screen}
 /// Signin screen widget.
@@ -23,6 +23,7 @@ class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
   String _password = '';
   bool _inProgress = false;
+  String? _error;
 
   /* #region Lifecycle */
   @override
@@ -42,6 +43,7 @@ class _SigninScreenState extends State<SigninScreen> {
     super.didChangeDependencies();
     // The configuration of InheritedWidgets has changed
     // Also called after initState but before build
+    AuthenticationScope.controllerOf(context).addListener(_listener);
   }
 
   @override
@@ -51,19 +53,32 @@ class _SigninScreenState extends State<SigninScreen> {
   }
   /* #endregion */
 
+  void _listener() {
+    if (!mounted) return;
+    _error = AuthenticationScope.controllerOf(context).state.error;
+    if (_error != null) {
+      _formKey.currentState?.validate();
+      setState(() {
+        _inProgress = false;
+      });
+    }
+  }
+
   void _submit() {
+    _error = null;
+    _formKey.currentState?.save();
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
     setState(() {
       _inProgress = true;
     });
 
-    _formKey.currentState?.save();
-    if (_formKey.currentState?.validate() ?? false) {
-      context.octopus.push(Routes.signup);
-    }
-
-    setState(() {
-      _inProgress = false;
-    });
+    AuthenticationScope.signIn(
+      context,
+      SignInData(masterPassword: _password),
+    );
   }
 
   @override
@@ -99,9 +114,9 @@ class _SigninScreenState extends State<SigninScreen> {
                     if ((value ?? '').isEmpty) {
                       return l10n.pleaseEnterMasterPassword;
                     }
-                    // if (_error) {
-                    //   return 'Password is invalid';
-                    // }
+                    if (_error != null) {
+                      return l10n.passwordIsInvalid;
+                    }
                     return null;
                   },
                   onSaved: (text) {

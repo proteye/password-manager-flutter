@@ -131,6 +131,12 @@ abstract class AppLocalizations {
   /// **'New master-password'**
   String get newMasterPassword;
 
+  /// No description provided for @passwordIsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is invalid'**
+  String get passwordIsInvalid;
+
   /// No description provided for @passwordMustBeAtLeast8CharactersLong.
   ///
   /// In en, this message translates to:

@@ -74,7 +74,7 @@ class AuthRepositoryImpl implements AuthRepository {
       var user = await _provider.restoreUser() ??
           const User.unauthenticated(isRegistered: false);
       if (user.isAuthenticated) {
-        await SecureDatabase.decryptDb(password: user.masterPassword);
+        // await SecureDatabase.decryptDb(password: user.masterPassword);
         user = const User.unauthenticated(isRegistered: true);
       }
       _userController.add(_user = user);
@@ -128,6 +128,33 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<AuthRepositoryResult> signIn(SignInData data) async {
+    try {
+      final user = await _provider.restoreUser();
+      if (user == null) {
+        throw Exception('User not found');
+      }
+      if (data.pinCode != null && data.pinCode != user.pinCode) {
+        throw Exception('Invalid pin code');
+      }
+      if (data.masterPassword != null &&
+          data.masterPassword != user.masterPassword) {
+        throw Exception('Invalid master password');
+      }
+
+      // Decrypt database by master-password.
+      await SecureDatabase.decryptDb(password: user.masterPassword);
+
+      _userController.add(_user = user);
+
+      return AuthRepositoryResult$Success(user: user);
+    } catch (e, st) {
+      l.e(e, st);
+      return AuthRepositoryResult$Failure(
+        error: 'Invalid credentials',
+        stackTrace: st,
+      );
+    }
+
     if (data.masterPassword != null) {
       return AuthRepositoryResult$Success(user: _user);
     } else if (data.pinCode != null && data.pinCode == _user.pinCode) {

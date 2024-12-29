@@ -43,6 +43,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get newMasterPassword => 'Новый мастер-пароль';
 
   @override
+  String get passwordIsInvalid => 'Неверный пароль';
+
+  @override
   String get passwordMustBeAtLeast8CharactersLong => 'Пароль должен содержать не менее 8 символов';
 
   @override

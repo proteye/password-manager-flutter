@@ -42,6 +42,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newMasterPassword => 'New master-password';
 
   @override
+  String get passwordIsInvalid => 'Password is invalid';
+
+  @override
   String get passwordMustBeAtLeast8CharactersLong => 'Password must be at least 8 characters long';
 
   @override
