@@ -154,13 +154,6 @@ class AuthRepositoryImpl implements AuthRepository {
         stackTrace: st,
       );
     }
-
-    if (data.masterPassword != null) {
-      return AuthRepositoryResult$Success(user: _user);
-    } else if (data.pinCode != null && data.pinCode == _user.pinCode) {
-      return AuthRepositoryResult$Success(user: _user);
-    }
-    return AuthRepositoryResult$Failure(error: 'Invalid credentials');
   }
 
   @override

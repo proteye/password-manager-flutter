@@ -133,6 +133,16 @@ class _SigninScreenState extends State<SigninScreen> {
                   onPressed: _inProgress ? null : _submit,
                   child: Text(l10n.signIn),
                 ),
+                // const SizedBox(height: PmSpacing.xl4),
+                // ElevatedButton(
+                //   key: const ValueKey('clear'),
+                //   style: ElevatedButton.styleFrom(
+                //     minimumSize: const Size.fromHeight(PmSize.btnBig),
+                //     textStyle: Theme.of(context).textTheme.titleMedium,
+                //   ),
+                //   onPressed: _inProgress ? null : _submit,
+                //   child: Text(l10n.signIn),
+                // ),
               ],
             ),
           ),

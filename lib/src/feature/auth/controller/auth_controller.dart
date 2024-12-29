@@ -109,7 +109,12 @@ final class AuthController extends StateController<AuthenticationState>
               message: 'Logging out...',
             ),
           );
-          await _repository.signOut();
+          final result = await _repository.signOut();
+          if (result is AuthRepositoryResult$Success) {
+            setState(AuthenticationState.idle(user: result.user));
+          } else {
+            throw Exception();
+          }
         },
         error: (error, _) async => setState(
           AuthenticationState.idle(
