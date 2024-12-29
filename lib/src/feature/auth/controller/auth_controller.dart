@@ -4,6 +4,7 @@ import 'package:control/control.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_state.dart';
 import 'package:password_manager/src/feature/auth/data/reopsitory/auth_repository.dart';
 import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
+import 'package:password_manager/src/feature/auth/model/sign_up_data.dart';
 import 'package:password_manager/src/feature/auth/model/user.dart';
 
 final class AuthController extends StateController<AuthenticationState>
@@ -63,7 +64,29 @@ final class AuthController extends StateController<AuthenticationState>
         error: (error, _) async => setState(
           AuthenticationState.idle(
             user: state.user,
-            error: 'Sign In Error', // ErrorUtil.formatMessage(error)
+            error: 'Sign In Error',
+          ),
+        ),
+        done: () async => setState(
+          AuthenticationState.idle(user: state.user),
+        ),
+      );
+
+  /// Sign up with the given [data].
+  void signUp(SignUpData data) => handle(
+        () async {
+          setState(
+            AuthenticationState.processing(
+              user: state.user,
+              message: 'Logging in...',
+            ),
+          );
+          await _repository.signUp(data);
+        },
+        error: (error, _) async => setState(
+          AuthenticationState.idle(
+            user: state.user,
+            error: 'Sign Up Error',
           ),
         ),
         done: () async => setState(
@@ -85,7 +108,7 @@ final class AuthController extends StateController<AuthenticationState>
         error: (error, _) async => setState(
           AuthenticationState.idle(
             user: state.user,
-            error: 'Sign Out Error', // ErrorUtil.formatMessage(error)
+            error: 'Sign Out Error',
           ),
         ),
         done: () async => setState(

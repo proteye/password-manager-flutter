@@ -3,6 +3,7 @@ import 'package:password_manager/src/common/model/dependencies.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_controller.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_state.dart';
 import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
+import 'package:password_manager/src/feature/auth/model/sign_up_data.dart';
 import 'package:password_manager/src/feature/auth/model/user.dart';
 
 /// {@template authentication_scope}
@@ -29,6 +30,10 @@ class AuthenticationScope extends StatefulWidget {
   /// Sign-In
   static void signIn(BuildContext context, SignInData data) =>
       _InheritedAuthenticationScope.of(context, listen: false).signIn(data);
+
+  /// Sign-Up
+  static void signUp(BuildContext context, SignUpData data) =>
+      _InheritedAuthenticationScope.of(context, listen: false).signUp(data);
 
   /// Sign-Out
   static void signOut(BuildContext context) =>

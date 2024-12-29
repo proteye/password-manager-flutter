@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:octopus/octopus.dart';
+import 'package:password_manager/src/common/constant/config.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
 import 'package:password_manager/src/common/router/routes.dart';
 import 'package:password_manager/src/common/theme/theme.dart';
@@ -99,7 +100,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     if ((value ?? '').isEmpty) {
                       return l10n.pleaseEnterMasterPassword;
                     }
-                    if (value!.length < 8) {
+                    if (value!.length < Config.passwordMinLength) {
                       return l10n.passwordMustBeAtLeast8CharactersLong;
                     }
                     return null;

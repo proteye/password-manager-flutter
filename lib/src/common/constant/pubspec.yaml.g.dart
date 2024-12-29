@@ -125,12 +125,12 @@ sealed class Pubspec {
   static final DateTime timestamp = DateTime.utc(
     2024,
     12,
-    28,
+    29,
     15,
-    4,
-    5,
-    970,
-    381,
+    11,
+    36,
+    485,
+    773,
   );
 
   /// Name
@@ -526,6 +526,12 @@ sealed class Pubspec {
     'flutter': <String, Object>{
       'uses-material-design': true,
       'generate': true,
+      'assets': <Object>[
+        r'assets/images/',
+      ],
+      'fonts': <Object>[
+        r'{family: Roboto, fonts: [{asset: assets/fonts/Roboto-Black.ttf, weight: 900}, {asset: assets/fonts/Roboto-Bold.ttf, weight: 700}, {asset: assets/fonts/Roboto-Medium.ttf, weight: 500}, {asset: assets/fonts/Roboto-Regular.ttf, weight: 400}]}',
+      ],
     },
   };
 

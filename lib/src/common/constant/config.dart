@@ -49,16 +49,21 @@ abstract final class Config {
 
   // --- DATABASE --- //
 
+  /// Database folder name by default.
+  /// e.g. data
+  static const String databaseFolder =
+      String.fromEnvironment('DATABASE_FOLDER', defaultValue: 'data');
+
   /// Database file name by default.
   /// e.g. sqlite means "sqlite.db" for native platforms and "sqlite"
   /// for web platform.
   static const String databaseName =
       String.fromEnvironment('DATABASE_NAME', defaultValue: 'app');
 
-  /// Database folder name by default.
-  /// e.g. data
-  static const String databaseFolder =
-      String.fromEnvironment('DATABASE_FOLDER', defaultValue: 'data');
+  /// Secure database file name by default.
+  /// e.g. "data"
+  static const String secureDatabaseName =
+      String.fromEnvironment('SECURE_DATABASE_NAME', defaultValue: 'data');
 
   /// Whether to drop database on start.
   /// e.g. true

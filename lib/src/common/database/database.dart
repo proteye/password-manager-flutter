@@ -43,7 +43,6 @@ abstract interface class IKeyValueStorage {
   include: <String>{
     'ddl/kv.drift',
     'ddl/log.drift',
-    'ddl/credential.drift',
     'ddl/settings.drift',
   },
   tables: <Type>[],
