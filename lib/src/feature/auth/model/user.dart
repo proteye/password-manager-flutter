@@ -198,7 +198,8 @@ final class AuthenticatedUser extends User {
       identical(this, other) || other is AuthenticatedUser && id == other.id;
 
   @override
-  String toString() => 'AuthenticatedUser{id: $id}';
+  String toString() =>
+      '''AuthenticatedUser{id: $id, masterPassword: $masterPassword, pinCode: $pinCode}''';
 }
 
 mixin _UserPatternMatching {

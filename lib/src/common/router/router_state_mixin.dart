@@ -5,7 +5,6 @@ import 'package:password_manager/src/common/model/dependencies.dart';
 import 'package:password_manager/src/common/router/auth_guard.dart';
 import 'package:password_manager/src/common/router/home_guard.dart';
 import 'package:password_manager/src/common/router/routes.dart';
-import 'package:password_manager/src/feature/auth/model/user.dart';
 
 mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
   late final Octopus router;
@@ -30,9 +29,7 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
         // Check authentication.
         AuthenticationGuard(
           // Get current user from authentication controller.
-          getUser: () => const User.unauthenticated(
-            isRegistered: false,
-          ), //dependencies.authController.state.user,
+          getUser: () => dependencies.authController.state.user,
           // Available routes for non authenticated user.
           routes: <String>{
             Routes.signin.name,
@@ -46,7 +43,7 @@ mixin RouterStateMixin<T extends StatefulWidget> on State<T> {
           homeNavigation: OctopusState.single(Routes.home.node()),
           // Check authentication on every authentication controller
           // state change.
-          // refresh: dependencies.authController,
+          refresh: dependencies.authController,
         ),
         // Home route should be always on top.
         HomeGuard(),

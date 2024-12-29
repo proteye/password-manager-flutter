@@ -78,19 +78,19 @@ final class AuthController extends StateController<AuthenticationState>
           setState(
             AuthenticationState.processing(
               user: state.user,
-              message: 'Logging in...',
+              message: 'Signing up...',
             ),
           );
-          await _repository.signUp(data);
+          final result = await _repository.signUp(data);
+          if (result is AuthRepositoryResult$Success) {
+            setState(AuthenticationState.idle(user: result.user));
+          }
         },
         error: (error, _) async => setState(
           AuthenticationState.idle(
             user: state.user,
             error: 'Sign Up Error',
           ),
-        ),
-        done: () async => setState(
-          AuthenticationState.idle(user: state.user),
         ),
       );
 

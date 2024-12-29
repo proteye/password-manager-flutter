@@ -8,11 +8,11 @@ sealed class AuthRepositoryResult {}
 /// {@macro auth_repository_result}
 class AuthRepositoryResult$Success extends AuthRepositoryResult {
   AuthRepositoryResult$Success({
-    this.user,
+    required this.user,
   });
 
   /// Current user.
-  final User? user;
+  final User user;
 }
 
 /// {@macro auth_repository_result}

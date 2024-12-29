@@ -5,6 +5,7 @@ import 'package:password_manager/src/common/constant/config.dart';
 import 'package:password_manager/src/common/initialization/widgets/inherited_dependencies.dart';
 import 'package:password_manager/src/common/localization/generated/app_localizations.dart';
 import 'package:password_manager/src/common/router/router_state_mixin.dart';
+import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
 import 'package:password_manager/src/feature/settings/data/reopsitory/settings_repository.dart';
 import 'package:password_manager/src/feature/settings/widget/settings_scope.dart';
 
@@ -66,7 +67,9 @@ class _AppState extends State<App> with RouterStateMixin {
           ),
           child: OctopusTools(
             octopus: router,
-            child: child ?? const SizedBox.shrink(),
+            child: AuthenticationScope(
+              child: child ?? const SizedBox.shrink(),
+            ),
           ),
         ),
       ),

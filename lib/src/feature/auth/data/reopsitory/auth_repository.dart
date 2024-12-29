@@ -118,7 +118,12 @@ class AuthRepositoryImpl implements AuthRepository {
           : SecureDatabase.lazy();
       await secureDatabase.refresh();
       await secureDatabase.close();
-      return AuthRepositoryResult$Success(user: _user);
+      final user = User.authenticated(
+        id: Config.defaultUserId,
+        masterPassword: data.masterPassword!,
+      );
+      _userController.add(_user = user);
+      return AuthRepositoryResult$Success(user: user);
     }
     return AuthRepositoryResult$Failure(error: 'Invalid credentials');
   }

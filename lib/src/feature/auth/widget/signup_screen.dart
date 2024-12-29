@@ -59,11 +59,10 @@ class _SignupScreenState extends State<SignupScreen> {
 
     _formKey.currentState?.save();
     if (_formKey.currentState?.validate() ?? false) {
-      AuthenticationScope.signUp(
+      return AuthenticationScope.signUp(
         context,
         SignUpData(masterPassword: _password),
       );
-      // context.octopus.push(Routes.signin);
     }
 
     setState(() {

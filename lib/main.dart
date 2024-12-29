@@ -6,7 +6,6 @@ import 'package:password_manager/src/common/util/app_zone.dart';
 import 'package:password_manager/src/common/util/error_util.dart';
 import 'package:password_manager/src/common/widget/app.dart';
 import 'package:password_manager/src/common/widget/app_error.dart';
-import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
 import 'package:password_manager/src/feature/settings/widget/settings_scope.dart';
 
 void main() => appZone(
@@ -23,10 +22,8 @@ void main() => appZone(
           onSuccess: (dependencies) => runApp(
             InheritedDependencies(
               dependencies: dependencies,
-              child: const AuthenticationScope(
-                child: SettingsScope(
-                  child: App(),
-                ),
+              child: const SettingsScope(
+                child: App(),
               ),
             ),
           ),
