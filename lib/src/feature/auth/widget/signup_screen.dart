@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/constant/config.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
-import 'package:password_manager/src/common/router/routes.dart';
 import 'package:password_manager/src/common/theme/theme.dart';
 import 'package:password_manager/src/common/widget/logo.dart';
+import 'package:password_manager/src/feature/auth/model/sign_up_data.dart';
+import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
 
 /// {@template signup_screen}
 /// Signup screen widget.
@@ -59,7 +59,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
     _formKey.currentState?.save();
     if (_formKey.currentState?.validate() ?? false) {
-      context.octopus.push(Routes.signin);
+      AuthenticationScope.signUp(
+        context,
+        SignUpData(masterPassword: _password),
+      );
+      // context.octopus.push(Routes.signin);
     }
 
     setState(() {

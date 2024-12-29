@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:password_manager/src/common/database/database.dart';
+import 'package:password_manager/src/common/database/secure_database.dart';
 import 'package:password_manager/src/feature/credentials/data/provider/credentials_provider.dart';
 import 'package:password_manager/src/feature/credentials/model/credential.dart';
 
@@ -9,11 +9,11 @@ import 'package:password_manager/src/feature/credentials/model/credential.dart';
 class DbCredentialsProvider implements CredentialsProvider {
   /// {@macro credentials_provider}
   DbCredentialsProvider({
-    required Database database,
+    required SecureDatabase database,
   }) : _database = database;
 
-  /// Database instance.
-  final Database _database;
+  /// Secure database instance.
+  final SecureDatabase _database;
 
   @override
   Future<List<Credential>> loadCredentials({
@@ -58,7 +58,9 @@ class DbCredentialsProvider implements CredentialsProvider {
   Future<Credential> saveCredential(Credential credential) async {
     await _database.into(_database.credentialTbl).insertOnConflictUpdate(
           CredentialTblCompanion.insert(
-            id: Value(credential.id),
+            id: credential.id != null
+                ? Value(credential.id!)
+                : const Value.absent(),
             jsonData: jsonEncode(credential.toJson()),
             version: const Value(Credential.version),
           ),

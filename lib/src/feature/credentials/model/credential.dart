@@ -5,10 +5,10 @@ part 'credential.g.dart';
 @JsonSerializable()
 class Credential {
   Credential({
-    required this.id,
     required this.password,
     required this.createDate,
     required this.updateDate,
+    this.id,
     this.name = '',
     this.url = '',
     this.username = '',
@@ -18,8 +18,8 @@ class Credential {
   });
 
   Credential.create({
-    required int id,
     required String password,
+    int? id,
     String name = '',
     String url = '',
     String username = '',
@@ -41,7 +41,7 @@ class Credential {
 
   Credential.empty()
       : this(
-          id: -1,
+          id: null,
           password: '',
           createDate: DateTime.now(),
           updateDate: DateTime.now(),
@@ -53,7 +53,7 @@ class Credential {
       _$CredentialFromJson(json);
 
   /// Unique ID.
-  int id;
+  int? id;
 
   /// Name of resource.
   String name;

@@ -61,7 +61,6 @@ abstract final class Config {
       String.fromEnvironment('DATABASE_NAME', defaultValue: 'app');
 
   /// Secure database file name by default.
-  /// e.g. "data"
   static const String secureDatabaseName =
       String.fromEnvironment('SECURE_DATABASE_NAME', defaultValue: 'data');
 

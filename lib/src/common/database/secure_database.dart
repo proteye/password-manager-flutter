@@ -74,6 +74,8 @@ class SecureDatabase extends _$SecureDatabase
           ),
         );
 
+  Future<void> refresh() => select(credentialTbl).get();
+
   @override
   int get schemaVersion => 1;
 

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:l/l.dart';
+import 'package:password_manager/src/common/constant/config.dart';
+import 'package:password_manager/src/common/database/secure_database.dart';
 import 'package:password_manager/src/feature/auth/data/provider/auth_provider.dart';
 import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
 import 'package:password_manager/src/feature/auth/model/sign_up_data.dart';
@@ -111,6 +113,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthRepositoryResult> signUp(SignUpData data) async {
     if (data.masterPassword != null) {
+      final secureDatabase = Config.inMemoryDatabase
+          ? SecureDatabase.memory()
+          : SecureDatabase.lazy();
+      await secureDatabase.refresh();
+      await secureDatabase.close();
       return AuthRepositoryResult$Success(user: _user);
     }
     return AuthRepositoryResult$Failure(error: 'Invalid credentials');
