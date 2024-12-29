@@ -71,10 +71,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthRepositoryResult> restoreUser() async {
     try {
-      final user = await _provider.restoreUser() ??
+      var user = await _provider.restoreUser() ??
           const User.unauthenticated(isRegistered: false);
       if (user.isAuthenticated) {
         await SecureDatabase.decryptDb(password: user.masterPassword);
+        user = const User.unauthenticated(isRegistered: true);
       }
       _userController.add(_user = user);
       return AuthRepositoryResult$Success(
