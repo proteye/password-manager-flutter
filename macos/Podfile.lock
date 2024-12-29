@@ -87,7 +87,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
 SPEC CHECKSUMS:
-  flutter_secure_storage_macos: 59459653abe1adb92abbc8ea747d79f8d19866c9
+  flutter_secure_storage_macos: d56e2d218c1130b262bef8b4a7d64f88d7f9c9ea
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   local_auth_darwin: 66e40372f1c29f383a314c738c7446e2f7fdadc3
   package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b

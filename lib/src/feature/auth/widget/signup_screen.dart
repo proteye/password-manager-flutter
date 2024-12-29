@@ -43,6 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
     super.didChangeDependencies();
     // The configuration of InheritedWidgets has changed
     // Also called after initState but before build
+    AuthenticationScope.controllerOf(context).addListener(_listener);
   }
 
   @override
@@ -51,6 +52,15 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
   /* #endregion */
+
+  void _listener() {
+    if (!mounted) return;
+    if (AuthenticationScope.controllerOf(context).state.error != null) {
+      setState(() {
+        _inProgress = false;
+      });
+    }
+  }
 
   void _submit() {
     _formKey.currentState?.save();
@@ -66,12 +76,6 @@ class _SignupScreenState extends State<SignupScreen> {
       context,
       SignUpData(masterPassword: _password),
     );
-
-    if (AuthenticationScope.controllerOf(context).state.error != null) {
-      setState(() {
-        _inProgress = false;
-      });
-    }
   }
 
   @override

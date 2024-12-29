@@ -169,6 +169,8 @@ final class AuthenticatedUser extends User {
         'status': 'authenticated',
         'authenticated': true,
         'id': id,
+        'masterPassword': masterPassword,
+        'pinCode': pinCode,
       };
 
   @override

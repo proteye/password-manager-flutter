@@ -30,4 +30,9 @@ class SecureAuthProvider implements AuthProvider {
       value: jsonEncode(user.toJson()),
     );
   }
+
+  @override
+  Future<void> clearUser() async {
+    await storage.delete(key: AuthConfig.userKey);
+  }
 }

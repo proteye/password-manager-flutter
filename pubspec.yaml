@@ -99,6 +99,15 @@ dev_dependencies:
   # Linting
   very_good_analysis: ^6.0.0
 
+dependency_overrides:
+  # temporary fix for https://github.com/mogol/flutter_secure_storage/issues/709
+  flutter_secure_storage: 9.0.0
+  flutter_secure_storage_linux: 1.2.0
+  flutter_secure_storage_macos: 3.0.1
+  flutter_secure_storage_platform_interface: 1.0.2
+  flutter_secure_storage_web: 1.2.0
+  flutter_secure_storage_windows: 3.0.0
+
 flutter:
   uses-material-design: true
   generate: true

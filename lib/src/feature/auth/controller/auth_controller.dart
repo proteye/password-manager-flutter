@@ -37,16 +37,18 @@ final class AuthController extends StateController<AuthenticationState>
               message: 'Restoring session...',
             ),
           );
-          await _repository.restoreUser();
+          final result = await _repository.restoreUser();
+          if (result is AuthRepositoryResult$Success) {
+            setState(AuthenticationState.idle(user: result.user));
+          } else {
+            throw Exception();
+          }
         },
         error: (error, _) async => setState(
           const AuthenticationState.idle(
             user: User.unauthenticated(isRegistered: false),
             error: 'Restore Error', // ErrorUtil.formatMessage(error)
           ),
-        ),
-        done: () async => setState(
-          AuthenticationState.idle(user: state.user),
         ),
       );
 
@@ -84,6 +86,8 @@ final class AuthController extends StateController<AuthenticationState>
           final result = await _repository.signUp(data);
           if (result is AuthRepositoryResult$Success) {
             setState(AuthenticationState.idle(user: result.user));
+          } else {
+            throw Exception();
           }
         },
         error: (error, _) async => setState(

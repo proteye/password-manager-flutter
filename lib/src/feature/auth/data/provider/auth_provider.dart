@@ -9,4 +9,7 @@ abstract class AuthProvider {
 
   /// Update user to current provider.
   Future<void> updateUser(User user);
+
+  /// Clear user from current provider.
+  Future<void> clearUser();
 }

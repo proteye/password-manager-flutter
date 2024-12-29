@@ -28,11 +28,14 @@ abstract class AuthRepository {
   /// Get current user.
   FutureOr<User> getUser();
 
-  /// Load pin code from current provider.
+  /// Restore user from current provider.
   Future<AuthRepositoryResult> restoreUser();
 
-  /// Save pin code to current provider.
+  /// Update user to current provider.
   Future<AuthRepositoryResult> updateUser(User user);
+
+  /// Clear user from current provider.
+  Future<AuthRepositoryResult> clearUser();
 
   /// Sign in to application.
   Future<AuthRepositoryResult> signIn(SignInData data);
@@ -70,6 +73,27 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final user = await _provider.restoreUser() ??
           const User.unauthenticated(isRegistered: false);
+      if (user.isAuthenticated) {
+        await SecureDatabase.decryptDb(password: user.masterPassword);
+      }
+      _userController.add(_user = user);
+      return AuthRepositoryResult$Success(
+        user: user,
+      );
+    } catch (e, st) {
+      l.e(e, st);
+      await _provider.clearUser();
+      return AuthRepositoryResult$Failure(
+        error: e,
+        stackTrace: st,
+      );
+    }
+  }
+
+  @override
+  Future<AuthRepositoryResult> updateUser(User user) async {
+    try {
+      await _provider.updateUser(user);
       _userController.add(_user = user);
       return AuthRepositoryResult$Success(
         user: user,
@@ -84,9 +108,10 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AuthRepositoryResult> updateUser(User user) async {
+  Future<AuthRepositoryResult> clearUser() async {
     try {
-      await _provider.updateUser(user);
+      await _provider.clearUser();
+      const user = User.unauthenticated(isRegistered: false);
       _userController.add(_user = user);
       return AuthRepositoryResult$Success(
         user: user,
@@ -126,6 +151,7 @@ class AuthRepositoryImpl implements AuthRepository {
         id: Config.defaultUserId,
         masterPassword: data.masterPassword,
       );
+      await _provider.updateUser(user);
       _userController.add(_user = user);
 
       return AuthRepositoryResult$Success(user: user);
