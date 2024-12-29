@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 @immutable
 final class SignUpData {
   const SignUpData({
-    this.masterPassword,
+    required this.masterPassword,
   });
 
   /// Master password.
-  final String? masterPassword;
+  final String masterPassword;
 }

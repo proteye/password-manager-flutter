@@ -112,20 +112,30 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<AuthRepositoryResult> signUp(SignUpData data) async {
-    if (data.masterPassword != null) {
+    try {
+      // Create secure database.
       final secureDatabase = Config.inMemoryDatabase
           ? SecureDatabase.memory()
           : SecureDatabase.lazy();
       await secureDatabase.refresh();
       await secureDatabase.close();
+      // Encrypt database by master-password.
+      await SecureDatabase.encryptDb(password: data.masterPassword);
+
       final user = User.authenticated(
         id: Config.defaultUserId,
-        masterPassword: data.masterPassword!,
+        masterPassword: data.masterPassword,
       );
       _userController.add(_user = user);
+
       return AuthRepositoryResult$Success(user: user);
+    } catch (e, st) {
+      l.e(e, st);
+      return AuthRepositoryResult$Failure(
+        error: 'Database creating or encryption error',
+        stackTrace: st,
+      );
     }
-    return AuthRepositoryResult$Failure(error: 'Invalid credentials');
   }
 
   @override

@@ -62,10 +62,13 @@ dependencies:
       url: https://github.com/proteye/window_manager
       ref: feature/auto-hide-toolbar
 
+  # Encrypt
+  encrypt: ^5.0.3
+  password_dart: ^2.0.1
+
   # Utility
   collection: ^1.17.2
   equatable: ^2.0.5
-  encrypt: ^5.0.3
   # queue: ^3.1.0
   # nanoid: ^1.0.0
   url_launcher: ^6.1.14

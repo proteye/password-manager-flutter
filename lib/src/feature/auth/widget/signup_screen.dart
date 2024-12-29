@@ -53,21 +53,25 @@ class _SignupScreenState extends State<SignupScreen> {
   /* #endregion */
 
   void _submit() {
+    _formKey.currentState?.save();
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
     setState(() {
       _inProgress = true;
     });
 
-    _formKey.currentState?.save();
-    if (_formKey.currentState?.validate() ?? false) {
-      return AuthenticationScope.signUp(
-        context,
-        SignUpData(masterPassword: _password),
-      );
-    }
+    AuthenticationScope.signUp(
+      context,
+      SignUpData(masterPassword: _password),
+    );
 
-    setState(() {
-      _inProgress = false;
-    });
+    if (AuthenticationScope.controllerOf(context).state.error != null) {
+      setState(() {
+        _inProgress = false;
+      });
+    }
   }
 
   @override

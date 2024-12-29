@@ -1,4 +1,7 @@
+import 'dart:io' as io;
+
 import 'package:drift/drift.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/widgets.dart'
     show AppLifecycleState, WidgetsBinding, WidgetsBindingObserver;
 import 'package:meta/meta.dart';
@@ -7,11 +10,18 @@ import 'package:password_manager/src/common/database/platform/secure_database_vm
     // ignore: uri_does_not_exist
     if (dart.library.html) 'package:password_manager/src/common/database/platform/secure_database_js.dart';
 import 'package:password_manager/src/common/database/secure_queries.dart';
+import 'package:password_manager/src/common/util/crypt_util.dart';
+import 'package:password_manager/src/common/util/db_util.dart';
 
 export 'package:drift/drift.dart' hide DatabaseOpener;
 export 'package:drift/isolate.dart';
 
 part 'secure_database.g.dart';
+
+abstract interface class IEncryptDatabase {
+  Future<void> encryptDb(String password);
+  Future<void> decryptDb(String password);
+}
 
 @DriftDatabase(
   include: <String>{
@@ -74,7 +84,63 @@ class SecureDatabase extends _$SecureDatabase
           ),
         );
 
+  /// Refreshes the database contents.
   Future<void> refresh() => select(credentialTbl).get();
+
+  /// Encrypts the database using [password] and save to storage.
+  static Future<void> encryptDb({
+    required String password,
+    bool deleteDbAfterEncrypt = false,
+  }) async {
+    final key = getKeyByPassword(password);
+    final iv = encrypt.IV.fromLength(ivLength);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+    final dbPath = await getDbPath(
+      '${Config.secureDatabaseName}${Config.databaseExtension}',
+    );
+    final encryptedDbPath = await getDbPath(
+      '${Config.secureDatabaseName}${Config.encryptedDatabaseExtension}',
+    );
+    final dbFile = io.File(dbPath);
+    final encryptedDbFile = io.File(encryptedDbPath);
+    final bytes = dbFile.readAsBytesSync();
+    final encrypted = encrypter.encryptBytes(bytes, iv: iv);
+    await encryptedDbFile.writeAsBytes([...iv.bytes, ...encrypted.bytes]);
+
+    if (deleteDbAfterEncrypt) {
+      await dbFile.delete();
+    }
+  }
+
+  /// Decrypts the database using [password] and save to storage.
+  static Future<void> decryptDb({
+    required String password,
+    bool deleteEncryptedDbAfterDecrypt = false,
+  }) async {
+    final key = getKeyByPassword(password);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final encryptedDbPath = await getDbPath(
+      '${Config.secureDatabaseName}${Config.encryptedDatabaseExtension}',
+    );
+    final dbPath = await getDbPath(
+      '${Config.secureDatabaseName}${Config.databaseExtension}',
+    );
+    final encryptedDbFile = io.File(encryptedDbPath);
+    final dbFile = io.File(dbPath);
+    final bytes = await encryptedDbFile.readAsBytes();
+    final iv = encrypt.IV(bytes.sublist(0, ivLength));
+    final encrypted = encrypt.Encrypted(bytes.sublist(ivLength));
+    final decryptedBytes = encrypter.decryptBytes(encrypted, iv: iv);
+    await dbFile.writeAsBytes(decryptedBytes);
+
+    if (deleteEncryptedDbAfterDecrypt) {
+      await encryptedDbFile.delete();
+    }
+  }
+
+  /// Length of the IV (initialization vector) used for encryption.
+  static const int ivLength = 16;
 
   @override
   int get schemaVersion => 1;

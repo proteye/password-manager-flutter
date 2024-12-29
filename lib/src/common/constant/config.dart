@@ -49,6 +49,12 @@ abstract final class Config {
 
   // --- DATABASE --- //
 
+  /// Database file extension.
+  static const String databaseExtension = '.db';
+
+  /// Encrypted database file extension.
+  static const String encryptedDatabaseExtension = '.encrypted';
+
   /// Database folder name by default.
   /// e.g. data
   static const String databaseFolder =
