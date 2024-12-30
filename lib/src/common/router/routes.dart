@@ -28,7 +28,8 @@ enum Routes with OctopusRoute {
         Routes.signin => const SigninScreen(),
         Routes.signup => const SignupScreen(),
         Routes.home => const CredentialListScreen(),
-        Routes.credentialDetails => const CredentialDetailsScreen(),
+        Routes.credentialDetails =>
+          CredentialDetailsScreen(id: node.arguments['id']),
         Routes.settings => const SettingsScreen(),
       };
 }

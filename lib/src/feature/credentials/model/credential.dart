@@ -93,7 +93,9 @@ class Credential {
       return '${name[0]}${name[1]}'.toUpperCase();
     } else if (url.length > 1) {
       final uri = Uri.parse(url);
-      return '${uri.host[0]}${uri.host[1]}'.toUpperCase();
+      return uri.host.length > 1
+          ? '${uri.host[0]}${uri.host[1]}'.toUpperCase()
+          : '${url[0]}${url[1]}'.toUpperCase();
     }
     return '';
   }

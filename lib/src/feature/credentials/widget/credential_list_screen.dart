@@ -58,7 +58,15 @@ class _CredentialListState extends State<_CredentialList> {
     );
   }
 
-  void _search() {}
+  void _onItemTap(int? id) {
+    if (id == null) return;
+    context.octopus.push(
+      Routes.credentialDetails,
+      arguments: {'id': id.toString()},
+    );
+  }
+
+  void _onSearch() {}
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +76,7 @@ class _CredentialListState extends State<_CredentialList> {
         actions: <Widget>[
           IconButton(
             icon: _searchIcon,
-            onPressed: _search,
+            onPressed: _onSearch,
           ),
         ],
       ),
@@ -82,7 +90,6 @@ class _CredentialListState extends State<_CredentialList> {
               child: Text('Error to load credentials'),
             );
           } else if (snapshot.hasData) {
-            print('snapshot: ${snapshot.data!.length}');
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
@@ -110,7 +117,7 @@ class _CredentialListState extends State<_CredentialList> {
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
-                    // _showDetails(item);
+                    _onItemTap(credential.id);
                   },
                 );
               },

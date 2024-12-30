@@ -82,6 +82,9 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
   @override
   Future<CredentialsResult> saveCredential(Credential credential) async {
     try {
+      credential
+        ..abbr = credential.generateAbbr()
+        ..color = credential.generateColor();
       final updatedCredential = await _provider.saveCredential(credential);
       return CredentialsResult$Success(credentials: [updatedCredential]);
     } catch (e, st) {
