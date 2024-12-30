@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:control/control.dart';
+import 'package:password_manager/src/common/database/secure_database.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_state.dart';
 import 'package:password_manager/src/feature/auth/data/reopsitory/auth_repository.dart';
 import 'package:password_manager/src/feature/auth/model/sign_in_data.dart';
@@ -27,6 +28,9 @@ final class AuthController extends StateController<AuthenticationState>
 
   final AuthRepository _repository;
   StreamSubscription<AuthenticationState>? _userSubscription;
+
+  /// Auth repository of application.
+  SecureDatabase? get secureDatabase => _repository.secureDatabase;
 
   /// Restore the session from the cache.
   void restore() => handle(

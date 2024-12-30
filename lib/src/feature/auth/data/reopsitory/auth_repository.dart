@@ -22,6 +22,9 @@ abstract class AuthRepository {
         provider: provider,
       );
 
+  /// Get secure database connection.
+  SecureDatabase? get secureDatabase;
+
   /// Stream of user changes.
   Stream<User> userChanges();
 
@@ -61,6 +64,11 @@ class AuthRepositoryImpl implements AuthRepository {
       StreamController<User>.broadcast();
 
   User _user = const User.unauthenticated(isRegistered: false);
+
+  SecureDatabase? _secureDatabase;
+
+  @override
+  SecureDatabase? get secureDatabase => _secureDatabase;
 
   @override
   FutureOr<User> getUser() => _user;
@@ -113,7 +121,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       // Clear user from secure storage.
       await _provider.clearUser();
-      // Remove database file.
+      // Close and remove database file.
+      await _secureDatabase?.close();
       await SecureDatabase.removeDb();
       const user = User.unauthenticated(isRegistered: false);
       _userController.add(_user = user);
@@ -146,6 +155,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // Decrypt database by master-password.
       await SecureDatabase.decryptDb(password: user.masterPassword);
+      // Open secure database.
+      _secureDatabase = Config.inMemoryDatabase
+          ? SecureDatabase.memory()
+          : SecureDatabase.lazy();
 
       _userController.add(_user = user);
 
@@ -163,11 +176,10 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<AuthRepositoryResult> signUp(SignUpData data) async {
     try {
       // Create secure database.
-      final secureDatabase = Config.inMemoryDatabase
+      _secureDatabase = Config.inMemoryDatabase
           ? SecureDatabase.memory()
           : SecureDatabase.lazy();
-      await secureDatabase.refresh();
-      await secureDatabase.close();
+      await _secureDatabase!.refresh();
       // Encrypt database by master-password.
       await SecureDatabase.encryptDb(password: data.masterPassword);
 
@@ -191,6 +203,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthRepositoryResult> signOut() => Future<AuthRepositoryResult>.sync(
         () {
+          _secureDatabase?.close();
           const user = User.unauthenticated(isRegistered: true);
           _userController.add(_user = user);
           return AuthRepositoryResult$Success(user: user);

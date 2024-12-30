@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:password_manager/src/common/database/secure_database.dart';
 import 'package:password_manager/src/common/model/dependencies.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_controller.dart';
 import 'package:password_manager/src/feature/auth/controller/auth_state.dart';
@@ -26,6 +27,10 @@ class AuthenticationScope extends StatefulWidget {
   /// Get the current [AuthController]
   static AuthController controllerOf(BuildContext context) =>
       _InheritedAuthenticationScope.of(context, listen: false);
+
+  /// Get the current [SecureDatabase] connection
+  static SecureDatabase? secureDatabaseOf(BuildContext context) =>
+      _InheritedAuthenticationScope.of(context, listen: false).secureDatabase;
 
   /// Sign-In
   static void signIn(BuildContext context, SignInData data) =>

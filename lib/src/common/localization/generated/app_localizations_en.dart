@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAndRememberAMasterPassword => 'Create and remember a master-password';
 
   @override
+  String get createNewCredential => 'Create new credential';
+
+  @override
   String get delete => 'Удалить';
 
   @override

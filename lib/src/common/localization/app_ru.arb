@@ -13,6 +13,7 @@
     "authorization": "Авторизация",
     "cancel": "Отмена",
     "createAndRememberAMasterPassword": "Придумайте и запомните мастер-пароль",
+    "createNewCredential": "Создать новую запись",
     "delete": "Удалить",
     "deleteAccount": "Удалить аккаунт",
     "enterYourMasterPasswordToSignIn": "Введите Ваш мастер-пароль для входа",

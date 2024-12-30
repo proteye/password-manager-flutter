@@ -119,6 +119,12 @@ abstract class AppLocalizations {
   /// **'Create and remember a master-password'**
   String get createAndRememberAMasterPassword;
 
+  /// No description provided for @createNewCredential.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new credential'**
+  String get createNewCredential;
+
   /// No description provided for @delete.
   ///
   /// In en, this message translates to:
