@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:password_manager/src/common/util/color_util.dart' as colorUtil;
 
 part 'credential.g.dart';
 
@@ -85,6 +86,20 @@ class Credential {
   /// Connect the generated [_$CredentialToJson] function to the `toJson`
   /// method.
   Map<String, dynamic> toJson() => _$CredentialToJson(this);
+
+  /// Generate abbreviation from name or url.
+  String generateAbbr() {
+    if (name.length > 1) {
+      return '${name[0]}${name[1]}'.toUpperCase();
+    } else if (url.length > 1) {
+      final uri = Uri.parse(url);
+      return '${uri.host[0]}${uri.host[1]}'.toUpperCase();
+    }
+    return '';
+  }
+
+  /// Generate random color.
+  String generateColor() => colorUtil.generateColor();
 
   /// Credential model version.
   static const int version = 1;

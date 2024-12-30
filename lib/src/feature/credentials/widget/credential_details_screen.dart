@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:octopus/octopus.dart';
 import 'package:password_manager/src/common/localization/localization.dart';
 import 'package:password_manager/src/common/util/launch_url.dart';
-import 'package:password_manager/src/common/widget/app_drawer.dart';
 import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
 import 'package:password_manager/src/feature/credentials/data/provider/db_credentials_provider.dart';
 import 'package:password_manager/src/feature/credentials/data/reopsitory/credentials_repository.dart';
+import 'package:password_manager/src/feature/credentials/data/reopsitory/credentials_result.dart';
 import 'package:password_manager/src/feature/credentials/model/credential.dart';
 
 /// {@template credential_details_screen}
@@ -54,34 +54,14 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
   late Credential _credential;
 
   bool _passwordVisible = false;
+  bool _inProgress = false;
+  String? _error;
 
-  /* #region Lifecycle */
   @override
   void initState() {
     super.initState();
-    // Initial state initialization
     _credential = widget.credential ?? Credential.empty();
   }
-
-  @override
-  void didUpdateWidget(covariant _CredentialDetails oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
-  }
-
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
 
   void _toggleEditMode() {
     setState(() {
@@ -106,7 +86,32 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
     context.octopus.pop();
   }
 
-  void _submit() {}
+  Future<void> _submit() async {
+    _formKey.currentState?.save();
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    setState(() {
+      _inProgress = true;
+    });
+
+    _credential
+      ..abbr = _credential.generateAbbr()
+      ..color = _credential.generateColor();
+    final result =
+        await context.read<CredentialsRepository>().saveCredential(_credential);
+
+    if (result is CredentialsResult$Success) {
+      _inProgress = false;
+      _isEditMode = false;
+    } else {
+      _inProgress = false;
+      _error = (result as CredentialsResult$Failure).error.toString();
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +137,6 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
               )
             : null,
       ),
-      drawer: const AppDrawer(),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.topCenter,
@@ -187,9 +191,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                     ),
                     if (!_isEditMode)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.open_in_browser,
-                          color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
                           launchUrl(_credential.url);
@@ -218,9 +221,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                     ),
                     if (!_isEditMode)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.content_copy,
-                          color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
                           _copyToClipboard(_credential.username, l10n.username);
@@ -247,7 +249,6 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                                     _passwordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Colors.grey,
                                   ),
                                   onPressed: _togglePasswordVisible,
                                 )
@@ -271,7 +272,6 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                           _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Colors.grey,
                         ),
                         onPressed: _togglePasswordVisible,
                       )
@@ -279,9 +279,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                       Container(),
                     if (!_isEditMode)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.content_copy,
-                          color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
                           _copyToClipboard(_credential.password, l10n.password);

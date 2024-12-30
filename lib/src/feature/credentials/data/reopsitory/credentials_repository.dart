@@ -29,7 +29,7 @@ abstract class CredentialsRepository {
   /// Load credential by id.
   Future<CredentialsResult> loadCredential(int id);
 
-  /// Save or update credential.
+  /// Create or update credential.
   Future<CredentialsResult> saveCredential(Credential credential);
 }
 

@@ -42,40 +42,21 @@ class _CredentialList extends StatefulWidget {
 /// State for widget CredentialListScreen.
 class _CredentialListState extends State<_CredentialList> {
   late Future<List<Credential>> _credentialItems;
-  late Widget _appBarTitle = Text(context.l10n.credentials);
-  Icon _searchIcon = Icon(Icons.search);
+  late final Widget _appBarTitle = Text(context.l10n.credentials);
+  final Icon _searchIcon = const Icon(Icons.search);
 
-  /* #region Lifecycle */
   @override
   void initState() {
     super.initState();
     // Initial state initialization
     _credentialItems =
         context.read<CredentialsRepository>().loadCredentials().then(
-              (result) =>
-                  result is CredentialsResult$Success ? result.credentials : [],
-            );
+      (result) {
+        if (result is CredentialsResult$Success) return result.credentials;
+        throw Exception((result as CredentialsResult$Failure).error);
+      },
+    );
   }
-
-  @override
-  void didUpdateWidget(covariant _CredentialList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
-  }
-
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
 
   void _search() {}
 
@@ -96,17 +77,24 @@ class _CredentialListState extends State<_CredentialList> {
         future: _credentialItems,
         builder:
             (BuildContext context, AsyncSnapshot<List<Credential>> snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error to load credentials'),
+            );
+          } else if (snapshot.hasData) {
+            print('snapshot: ${snapshot.data!.length}');
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
                 final credential = snapshot.data![index];
                 return ListTile(
                   title: Text(
-                    credential.name,
+                    credential.name.isNotEmpty
+                        ? credential.name
+                        : credential.url,
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  subtitle: Text(credential.username),
+                  subtitle: Text(credential.comment),
                   leading: Container(
                     alignment: Alignment.center,
                     width: 50,
@@ -117,10 +105,7 @@ class _CredentialListState extends State<_CredentialList> {
                     ),
                     child: Text(
                       credential.abbr,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   trailing: const Icon(Icons.chevron_right),

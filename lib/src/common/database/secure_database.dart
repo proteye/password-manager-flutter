@@ -115,6 +115,7 @@ class SecureDatabase extends _$SecureDatabase
   /// Decrypts the database using [password] and save to storage.
   static Future<void> decryptDb({
     required String password,
+    bool replaceExistingDb = false,
     bool deleteEncryptedDbAfterDecrypt = false,
   }) async {
     final key = getKeyByPassword(password);
@@ -132,8 +133,10 @@ class SecureDatabase extends _$SecureDatabase
     final iv = encrypt.IV(bytes.sublist(0, ivLength));
     final encrypted = encrypt.Encrypted(bytes.sublist(ivLength));
     final decryptedBytes = encrypter.decryptBytes(encrypted, iv: iv);
-    await dbFile.writeAsBytes(decryptedBytes);
 
+    if (!dbFile.existsSync() || replaceExistingDb) {
+      await dbFile.writeAsBytes(decryptedBytes);
+    }
     if (deleteEncryptedDbAfterDecrypt) {
       await encryptedDbFile.delete();
     }

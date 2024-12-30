@@ -25,33 +25,11 @@ class _SigninScreenState extends State<SigninScreen> {
   bool _inProgress = false;
   String? _error;
 
-  /* #region Lifecycle */
-  @override
-  void initState() {
-    super.initState();
-    // Initial state initialization
-  }
-
-  @override
-  void didUpdateWidget(covariant SigninScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
     AuthenticationScope.controllerOf(context).addListener(_listener);
   }
-
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
 
   void _listener() {
     if (!mounted) return;
@@ -84,7 +62,7 @@ class _SigninScreenState extends State<SigninScreen> {
   Future<void> _deleteAccount() async {
     final l10n = context.l10n;
 
-    await showDialog(
+    await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(

@@ -25,33 +25,11 @@ class _SignupScreenState extends State<SignupScreen> {
   String _password = '';
   bool _inProgress = false;
 
-  /* #region Lifecycle */
-  @override
-  void initState() {
-    super.initState();
-    // Initial state initialization
-  }
-
-  @override
-  void didUpdateWidget(covariant SignupScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // Widget configuration changed
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // The configuration of InheritedWidgets has changed
-    // Also called after initState but before build
     AuthenticationScope.controllerOf(context).addListener(_listener);
   }
-
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
 
   void _listener() {
     if (!mounted) return;
