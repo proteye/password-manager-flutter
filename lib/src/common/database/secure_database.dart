@@ -139,6 +139,16 @@ class SecureDatabase extends _$SecureDatabase
     }
   }
 
+  static Future<void> removeDb() async {
+    final dbPath = await getDbPath(
+      '${Config.secureDatabaseName}${Config.databaseExtension}',
+    );
+    final dbFile = io.File(dbPath);
+    if (dbFile.existsSync()) {
+      await dbFile.delete();
+    }
+  }
+
   /// Length of the IV (initialization vector) used for encryption.
   static const int ivLength = 16;
 

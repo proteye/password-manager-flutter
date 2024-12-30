@@ -15,7 +15,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAndRememberAMasterPassword => 'Create and remember a master-password';
 
   @override
+  String get deleteAccount => 'Delete account';
+
+  @override
   String get enterYourMasterPasswordToSignIn => 'Enter your master-password to sign in';
+
+  @override
+  String get exit => 'Exit';
 
   @override
   String get masterPassword => 'Master-password';

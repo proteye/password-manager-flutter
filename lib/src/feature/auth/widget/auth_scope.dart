@@ -39,6 +39,10 @@ class AuthenticationScope extends StatefulWidget {
   static void signOut(BuildContext context) =>
       _InheritedAuthenticationScope.of(context, listen: false).signOut();
 
+  /// Clear current user
+  static void clearUser(BuildContext context) =>
+      _InheritedAuthenticationScope.of(context, listen: false).clearUser();
+
   @override
   State<AuthenticationScope> createState() => _AuthenticationScopeState();
 }

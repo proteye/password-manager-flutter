@@ -122,6 +122,30 @@ final class AuthController extends StateController<AuthenticationState>
             error: 'Sign Out Error',
           ),
         ),
+      );
+
+  /// Exit and delete current user.
+  void clearUser() => handle(
+        () async {
+          setState(
+            AuthenticationState.processing(
+              user: state.user,
+              message: 'Clearing user...',
+            ),
+          );
+          final result = await _repository.clearUser();
+          if (result is AuthRepositoryResult$Success) {
+            setState(AuthenticationState.idle(user: result.user));
+          } else {
+            throw Exception();
+          }
+        },
+        error: (error, _) async => setState(
+          AuthenticationState.idle(
+            user: state.user,
+            error: 'Clear user Error',
+          ),
+        ),
         // done: () async => setState(
         //   const AuthenticationState.idle(
         //     user: User.unauthenticated(isRegistered: true),

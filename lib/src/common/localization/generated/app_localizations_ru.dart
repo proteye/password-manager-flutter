@@ -15,7 +15,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get createAndRememberAMasterPassword => 'Придумайте и запомните мастер-пароль';
 
   @override
+  String get deleteAccount => 'Удалить аккаунт';
+
+  @override
   String get enterYourMasterPasswordToSignIn => 'Введите Ваш мастер-пароль для входа';
+
+  @override
+  String get exit => 'Выйти';
 
   @override
   String get masterPassword => 'Мастер-пароль';

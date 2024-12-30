@@ -81,6 +81,16 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
+  void _deleteAccount() {
+    _error = null;
+
+    setState(() {
+      _inProgress = true;
+    });
+
+    AuthenticationScope.clearUser(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -133,16 +143,18 @@ class _SigninScreenState extends State<SigninScreen> {
                   onPressed: _inProgress ? null : _submit,
                   child: Text(l10n.signIn),
                 ),
-                // const SizedBox(height: PmSpacing.xl4),
-                // ElevatedButton(
-                //   key: const ValueKey('clear'),
-                //   style: ElevatedButton.styleFrom(
-                //     minimumSize: const Size.fromHeight(PmSize.btnBig),
-                //     textStyle: Theme.of(context).textTheme.titleMedium,
-                //   ),
-                //   onPressed: _inProgress ? null : _submit,
-                //   child: Text(l10n.signIn),
-                // ),
+                const SizedBox(height: PmSpacing.xl4),
+                ElevatedButton(
+                  key: const ValueKey('exitAndClear'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    foregroundColor: Theme.of(context).colorScheme.onError,
+                    minimumSize: const Size.fromHeight(PmSize.btnBig),
+                    textStyle: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  onPressed: _inProgress ? null : _deleteAccount,
+                  child: Text(l10n.deleteAccount),
+                ),
               ],
             ),
           ),

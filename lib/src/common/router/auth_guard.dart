@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:octopus/octopus.dart';
+import 'package:password_manager/src/common/router/routes.dart';
 import 'package:password_manager/src/feature/auth/model/user.dart';
 
 /// A router guard that checks if the user is authenticated.
@@ -70,6 +71,12 @@ class AuthenticationGuard extends OctopusGuard {
         // User not authenticated.
         // Remove any navigation that is not an authentication navigation.
         state.removeWhere((child) => !_routes.contains(child.name));
+        if (!user.isRegistered &&
+            state.children.last.name != Routes.signup.name) {
+          state
+            ..clear()
+            ..add(Routes.signup.node());
+        }
         // Add the signin navigation if the state is empty.
         // Or return the state if it contains the signin navigation.
         return state.isEmpty

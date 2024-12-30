@@ -107,11 +107,23 @@ abstract class AppLocalizations {
   /// **'Create and remember a master-password'**
   String get createAndRememberAMasterPassword;
 
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccount;
+
   /// No description provided for @enterYourMasterPasswordToSignIn.
   ///
   /// In en, this message translates to:
   /// **'Enter your master-password to sign in'**
   String get enterYourMasterPasswordToSignIn;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exit;
 
   /// No description provided for @masterPassword.
   ///

@@ -111,7 +111,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<AuthRepositoryResult> clearUser() async {
     try {
+      // Clear user from secure storage.
       await _provider.clearUser();
+      // Remove database file.
+      await SecureDatabase.removeDb();
       const user = User.unauthenticated(isRegistered: false);
       _userController.add(_user = user);
       return AuthRepositoryResult$Success(
