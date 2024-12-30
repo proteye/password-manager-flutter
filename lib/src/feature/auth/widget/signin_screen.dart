@@ -148,6 +148,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 TextFormField(
                   key: const ValueKey('password'),
                   autocorrect: false,
+                  autofocus: true,
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(

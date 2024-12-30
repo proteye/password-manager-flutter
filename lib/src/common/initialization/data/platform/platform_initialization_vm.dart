@@ -33,7 +33,7 @@ Future<void> _desktopInitialization() async {
             ? ThemeData.dark().colorScheme.surface
             : ThemeData.light().colorScheme.surface,
     skipTaskbar: false,
-    titleBarStyle: TitleBarStyle.hidden,
+    titleBarStyle: TitleBarStyle.normal,
     fullScreen: false,
     title: Config.appName,
   );

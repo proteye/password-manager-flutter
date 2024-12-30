@@ -18,10 +18,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Отмена';
 
   @override
+  String get comment => 'Comment';
+
+  @override
   String get createAndRememberAMasterPassword => 'Create and remember a master-password';
 
   @override
   String get createNewCredential => 'Create new credential';
+
+  @override
+  String get credentials => 'Credentials';
 
   @override
   String get delete => 'Удалить';
@@ -57,7 +63,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get newCredential => 'New credential';
+
+  @override
   String get newMasterPassword => 'New master-password';
+
+  @override
+  String get password => 'Password';
 
   @override
   String get passwordIsInvalid => 'Password is invalid';
@@ -67,6 +79,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterMasterPassword => 'Please enter master-password';
+
+  @override
+  String get pleaseEnterPassword => 'Please enter password';
 
   @override
   String get pleaseRepeatMasterPassword => 'Please repeat master-password';
@@ -81,6 +96,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get repeatYourMasterPasswordAgain => 'Repeat your master-password again';
 
   @override
+  String get resourceName => 'Resource name';
+
+  @override
+  String get resourceUrl => 'Resource URL';
+
+  @override
   String get signIn => 'Sign in';
 
   @override
@@ -88,6 +109,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thePasswordsDoNotMatch => 'The passwords do not match';
+
+  @override
+  String get username => 'Username';
 
   @override
   String get whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount => 'When deleting, you will lose all saved passwords associated with the account.';

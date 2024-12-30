@@ -26,17 +26,7 @@ class CredentialListScreen extends StatelessWidget {
             database: AuthenticationScope.secureDatabaseOf(context)!,
           ),
         ),
-        child: Scaffold(
-          drawer: const AppDrawer(),
-          body: const _CredentialList(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              context.octopus.push(Routes.credentialDetails);
-            },
-            tooltip: context.l10n.createNewCredential,
-            child: const Icon(Icons.add),
-          ),
-        ),
+        child: const _CredentialList(),
       );
 }
 
@@ -52,6 +42,8 @@ class _CredentialList extends StatefulWidget {
 /// State for widget CredentialListScreen.
 class _CredentialListState extends State<_CredentialList> {
   late Future<List<Credential>> _credentialItems;
+  late Widget _appBarTitle = Text(context.l10n.credentials);
+  Icon _searchIcon = Icon(Icons.search);
 
   /* #region Lifecycle */
   @override
@@ -85,8 +77,22 @@ class _CredentialListState extends State<_CredentialList> {
   }
   /* #endregion */
 
+  void _search() {}
+
   @override
-  Widget build(BuildContext context) => FutureBuilder<List<Credential>>(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: _appBarTitle,
+        actions: <Widget>[
+          IconButton(
+            icon: _searchIcon,
+            onPressed: _search,
+          ),
+        ],
+      ),
+      drawer: const AppDrawer(),
+      body: FutureBuilder<List<Credential>>(
         future: _credentialItems,
         builder:
             (BuildContext context, AsyncSnapshot<List<Credential>> snapshot) {
@@ -128,5 +134,14 @@ class _CredentialListState extends State<_CredentialList> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      );
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.octopus.push(Routes.credentialDetails);
+        },
+        tooltip: context.l10n.createNewCredential,
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
 }

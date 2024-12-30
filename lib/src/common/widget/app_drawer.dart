@@ -30,7 +30,7 @@ class AppDrawer extends StatelessWidget {
           return ListTile(
             title: Text(
               item.name,
-              style: TextStyle(color: isLast ? Colors.red : null),
+              // style: TextStyle(color: isLast ? Colors.red : null),
             ),
             trailing: !isLast ? const Icon(Icons.arrow_right) : null,
             // leading: Icon(item['icon'], color: isLast ? Colors.red : null),

@@ -18,10 +18,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cancel => 'Отмена';
 
   @override
+  String get comment => 'Комментарий';
+
+  @override
   String get createAndRememberAMasterPassword => 'Придумайте и запомните мастер-пароль';
 
   @override
   String get createNewCredential => 'Создать новую запись';
+
+  @override
+  String get credentials => 'Учетные записи';
 
   @override
   String get delete => 'Удалить';
@@ -58,7 +64,13 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get newCredential => 'Новая запись';
+
+  @override
   String get newMasterPassword => 'Новый мастер-пароль';
+
+  @override
+  String get password => 'Пароль';
 
   @override
   String get passwordIsInvalid => 'Неверный пароль';
@@ -68,6 +80,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pleaseEnterMasterPassword => 'Введите мастер-пароль';
+
+  @override
+  String get pleaseEnterPassword => 'Пожалуйста, введите пароль';
 
   @override
   String get pleaseRepeatMasterPassword => 'Повторите мастер-пароль';
@@ -82,6 +97,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get repeatYourMasterPasswordAgain => 'Повторите Ваш мастер-пароль еще раз';
 
   @override
+  String get resourceName => 'Название ресурса';
+
+  @override
+  String get resourceUrl => 'URL ресурса';
+
+  @override
   String get signIn => 'Войти';
 
   @override
@@ -89,6 +110,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get thePasswordsDoNotMatch => 'Пароли не совпадают';
+
+  @override
+  String get username => 'Имя пользователя';
 
   @override
   String get whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount => 'При удалении Вы потеряете все сохраненные пароли связанные с этим аккаунтом.';

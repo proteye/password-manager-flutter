@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:octopus/octopus.dart';
+import 'package:password_manager/src/common/localization/localization.dart';
 import 'package:password_manager/src/common/util/launch_url.dart';
 import 'package:password_manager/src/common/widget/app_drawer.dart';
 import 'package:password_manager/src/feature/auth/widget/auth_scope.dart';
@@ -48,7 +50,7 @@ class _CredentialDetails extends StatefulWidget {
 /// State for widget CredentialDetailsScreen.
 class _CredentialDetailsState extends State<_CredentialDetails> {
   final _formKey = GlobalKey<FormState>();
-  late final bool _isEditMode = widget.credential == null;
+  late bool _isEditMode = widget.credential == null;
   late Credential _credential;
 
   bool _passwordVisible = false;
@@ -81,7 +83,13 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
   }
   /* #endregion */
 
-  _togglePasswordVisible() {
+  void _toggleEditMode() {
+    setState(() {
+      _isEditMode = true;
+    });
+  }
+
+  void _togglePasswordVisible() {
     setState(() {
       _passwordVisible = !_passwordVisible;
     });
@@ -94,9 +102,36 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
         .showSnackBar(SnackBar(content: Text('$field copied to clipboard')));
   }
 
+  void _cancel() {
+    context.octopus.pop();
+  }
+
+  void _submit() {}
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
+      appBar: AppBar(
+        title: _credential.name.isNotEmpty
+            ? Text(_credential.name)
+            : Text(l10n.newCredential),
+        actions: _isEditMode
+            ? <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.save),
+                  onPressed: _submit,
+                ),
+              ]
+            : null,
+        leading: _isEditMode
+            ? IconButton(
+                icon: const Icon(Icons.cancel),
+                onPressed: _credential.id != null ? _toggleEditMode : _cancel,
+              )
+            : null,
+      ),
       drawer: const AppDrawer(),
       body: SingleChildScrollView(
         child: Container(
@@ -112,8 +147,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                   autofocus: _isEditMode,
                   enabled: _isEditMode,
                   // focusNode: _nameFocusNode,
-                  decoration: const InputDecoration(
-                    labelText: 'Service name',
+                  decoration: InputDecoration(
+                    labelText: l10n.resourceName,
                   ),
                   initialValue: _credential.name,
                   validator: (value) {
@@ -135,8 +170,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                         autocorrect: false,
                         enabled: _isEditMode,
                         keyboardType: TextInputType.url,
-                        decoration: const InputDecoration(
-                          labelText: 'Service URL',
+                        decoration: InputDecoration(
+                          labelText: l10n.resourceUrl,
                         ),
                         initialValue: _credential.url,
                         validator: (value) {
@@ -172,8 +207,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                         key: const Key('username'),
                         autocorrect: false,
                         enabled: _isEditMode,
-                        decoration: const InputDecoration(
-                          labelText: 'Username',
+                        decoration: InputDecoration(
+                          labelText: l10n.username,
                         ),
                         initialValue: _credential.username,
                         onSaved: (text) {
@@ -188,7 +223,7 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                           color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
-                          _copyToClipboard(_credential.username, 'Username');
+                          _copyToClipboard(_credential.username, l10n.username);
                         },
                       )
                     else
@@ -205,7 +240,7 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                         obscureText: !_passwordVisible,
                         enabled: _isEditMode,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: l10n.password,
                           suffixIcon: _isEditMode
                               ? IconButton(
                                   icon: Icon(
@@ -221,7 +256,7 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                         initialValue: _credential.password,
                         validator: (value) {
                           if ((value ?? '').isEmpty) {
-                            return 'Please enter password';
+                            return l10n.pleaseEnterPassword;
                           }
                           return null;
                         },
@@ -249,7 +284,7 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                           color: Theme.of(context).primaryColorDark,
                         ),
                         onPressed: () {
-                          _copyToClipboard(_credential.password, 'Password');
+                          _copyToClipboard(_credential.password, l10n.password);
                         },
                       )
                     else
@@ -260,8 +295,8 @@ class _CredentialDetailsState extends State<_CredentialDetails> {
                 TextFormField(
                   key: const Key('comment'),
                   enabled: _isEditMode,
-                  decoration: const InputDecoration(
-                    labelText: 'Comment',
+                  decoration: InputDecoration(
+                    labelText: l10n.comment,
                   ),
                   initialValue: _credential.comment,
                   onSaved: (text) {

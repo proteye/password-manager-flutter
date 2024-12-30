@@ -101,6 +101,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 TextFormField(
                   key: const ValueKey('password'),
                   autocorrect: false,
+                  autofocus: true,
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(

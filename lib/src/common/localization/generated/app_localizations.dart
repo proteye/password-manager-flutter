@@ -113,6 +113,12 @@ abstract class AppLocalizations {
   /// **'Отмена'**
   String get cancel;
 
+  /// No description provided for @comment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get comment;
+
   /// No description provided for @createAndRememberAMasterPassword.
   ///
   /// In en, this message translates to:
@@ -124,6 +130,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create new credential'**
   String get createNewCredential;
+
+  /// No description provided for @credentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials'**
+  String get credentials;
 
   /// No description provided for @delete.
   ///
@@ -161,11 +173,23 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{0 matches} =1{1 match} other{{count} matches}}'**
   String nMatches(num count);
 
+  /// No description provided for @newCredential.
+  ///
+  /// In en, this message translates to:
+  /// **'New credential'**
+  String get newCredential;
+
   /// No description provided for @newMasterPassword.
   ///
   /// In en, this message translates to:
   /// **'New master-password'**
   String get newMasterPassword;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
 
   /// No description provided for @passwordIsInvalid.
   ///
@@ -184,6 +208,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter master-password'**
   String get pleaseEnterMasterPassword;
+
+  /// No description provided for @pleaseEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter password'**
+  String get pleaseEnterPassword;
 
   /// No description provided for @pleaseRepeatMasterPassword.
   ///
@@ -209,6 +239,18 @@ abstract class AppLocalizations {
   /// **'Repeat your master-password again'**
   String get repeatYourMasterPasswordAgain;
 
+  /// No description provided for @resourceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource name'**
+  String get resourceName;
+
+  /// No description provided for @resourceUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource URL'**
+  String get resourceUrl;
+
   /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
@@ -226,6 +268,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The passwords do not match'**
   String get thePasswordsDoNotMatch;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
 
   /// No description provided for @whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount.
   ///
