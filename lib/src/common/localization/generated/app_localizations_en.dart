@@ -9,10 +9,19 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get areYouSureYouWantToDeleteYourAccount => 'Are you sure you want to delete your account?';
+
+  @override
   String get authorization => 'Authorization';
 
   @override
+  String get cancel => 'Отмена';
+
+  @override
   String get createAndRememberAMasterPassword => 'Create and remember a master-password';
+
+  @override
+  String get delete => 'Удалить';
 
   @override
   String get deleteAccount => 'Delete account';
@@ -76,4 +85,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thePasswordsDoNotMatch => 'The passwords do not match';
+
+  @override
+  String get whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount => 'When deleting, you will lose all saved passwords associated with the account.';
 }

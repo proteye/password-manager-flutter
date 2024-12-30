@@ -95,17 +95,35 @@ abstract class AppLocalizations {
     Locale('ru')
   ];
 
+  /// No description provided for @areYouSureYouWantToDeleteYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get areYouSureYouWantToDeleteYourAccount;
+
   /// No description provided for @authorization.
   ///
   /// In en, this message translates to:
   /// **'Authorization'**
   String get authorization;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Отмена'**
+  String get cancel;
+
   /// No description provided for @createAndRememberAMasterPassword.
   ///
   /// In en, this message translates to:
   /// **'Create and remember a master-password'**
   String get createAndRememberAMasterPassword;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Удалить'**
+  String get delete;
 
   /// No description provided for @deleteAccount.
   ///
@@ -202,6 +220,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The passwords do not match'**
   String get thePasswordsDoNotMatch;
+
+  /// No description provided for @whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'When deleting, you will lose all saved passwords associated with the account.'**
+  String get whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

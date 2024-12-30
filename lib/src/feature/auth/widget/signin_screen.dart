@@ -81,14 +81,48 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  void _deleteAccount() {
-    _error = null;
+  Future<void> _deleteAccount() async {
+    final l10n = context.l10n;
 
-    setState(() {
-      _inProgress = true;
-    });
-
-    AuthenticationScope.clearUser(context);
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n.areYouSureYouWantToDeleteYourAccount,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        content: Text(
+          l10n.whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: TextButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.titleMedium,
+            ),
+            child: Text(l10n.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              setState(() {
+                _inProgress = true;
+              });
+              AuthenticationScope.clearUser(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(context).colorScheme.onError,
+              textStyle: Theme.of(context).textTheme.titleMedium,
+            ),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

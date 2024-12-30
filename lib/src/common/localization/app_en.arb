@@ -1,7 +1,10 @@
 {
     "@@locale": "en",
+    "@areYouSureYouWantToDeleteYourAccount": {},
     "@authorization": {},
+    "@cancel": {},
     "@createAndRememberAMasterPassword": {},
+    "@delete": {},
     "@deleteAccount": {},
     "@enterYourMasterPasswordToSignIn": {},
     "@exit": {},
@@ -26,8 +29,12 @@
     "@signIn": {},
     "@signUp": {},
     "@thePasswordsDoNotMatch": {},
+    "@whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount": {},
+    "areYouSureYouWantToDeleteYourAccount": "Are you sure you want to delete your account?",
     "authorization": "Authorization",
+    "cancel": "Отмена",
     "createAndRememberAMasterPassword": "Create and remember a master-password",
+    "delete": "Удалить",
     "deleteAccount": "Delete account",
     "enterYourMasterPasswordToSignIn": "Enter your master-password to sign in",
     "exit": "Exit",
@@ -43,5 +50,6 @@
     "repeatYourMasterPasswordAgain": "Repeat your master-password again",
     "signIn": "Sign in",
     "signUp": "Sign up",
-    "thePasswordsDoNotMatch": "The passwords do not match"
+    "thePasswordsDoNotMatch": "The passwords do not match",
+    "whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount": "When deleting, you will lose all saved passwords associated with the account."
 }

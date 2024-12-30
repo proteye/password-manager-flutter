@@ -9,8 +9,11 @@
             }
         }
     },
+    "areYouSureYouWantToDeleteYourAccount": "Вы действительно хотите удалить Ваш аккаунт?",
     "authorization": "Авторизация",
+    "cancel": "Отмена",
     "createAndRememberAMasterPassword": "Придумайте и запомните мастер-пароль",
+    "delete": "Удалить",
     "deleteAccount": "Удалить аккаунт",
     "enterYourMasterPasswordToSignIn": "Введите Ваш мастер-пароль для входа",
     "exit": "Выйти",
@@ -26,5 +29,6 @@
     "repeatYourMasterPasswordAgain": "Повторите Ваш мастер-пароль еще раз",
     "signIn": "Войти",
     "signUp": "Зарегистрироваться",
-    "thePasswordsDoNotMatch": "Пароли не совпадают"
+    "thePasswordsDoNotMatch": "Пароли не совпадают",
+    "whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount": "При удалении Вы потеряете все сохраненные пароли связанные с этим аккаунтом."
 }

@@ -9,10 +9,19 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
+  String get areYouSureYouWantToDeleteYourAccount => 'Вы действительно хотите удалить Ваш аккаунт?';
+
+  @override
   String get authorization => 'Авторизация';
 
   @override
+  String get cancel => 'Отмена';
+
+  @override
   String get createAndRememberAMasterPassword => 'Придумайте и запомните мастер-пароль';
+
+  @override
+  String get delete => 'Удалить';
 
   @override
   String get deleteAccount => 'Удалить аккаунт';
@@ -77,4 +86,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get thePasswordsDoNotMatch => 'Пароли не совпадают';
+
+  @override
+  String get whenDeletingYouWillLoseAllSavedPasswordsAssociatedWithTheAccount => 'При удалении Вы потеряете все сохраненные пароли связанные с этим аккаунтом.';
 }
