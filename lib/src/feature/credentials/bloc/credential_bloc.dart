@@ -18,9 +18,21 @@ class CredentialBloc extends Bloc<CredentialEvent, CredentialState> {
         CredentialEvent$Delete() => _deleteCredential(event, emit),
       },
     );
+    _repository.credentials.addListener(_listener);
   }
 
   final CredentialsRepository _repository;
+
+  @override
+  Future<void> close() async {
+    _repository.credentials.removeListener(_listener);
+    return super.close();
+  }
+
+  void _listener() {
+    if (isClosed) return;
+    add(const CredentialEvent$Load());
+  }
 
   Future<void> _loadCredentials(
     CredentialEvent$Load event,

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:l/l.dart';
 import 'package:password_manager/src/feature/credentials/data/provider/credentials_provider.dart';
 import 'package:password_manager/src/feature/credentials/data/reopsitory/credentials_result.dart';
@@ -16,6 +18,9 @@ abstract class CredentialsRepository {
       CredentialsRepositoryImpl(
         provider: provider,
       );
+
+  /// List of actual credentials.
+  ValueNotifier<List<Credential>> get credentials;
 
   /// Load all credentials.
   Future<CredentialsResult> loadCredentials({
@@ -43,6 +48,15 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
   /// {@macro credentials_provider}
   final CredentialsProvider _provider;
 
+  final ValueNotifier<List<Credential>> _credentialsNotifier =
+      ValueNotifier([]);
+
+  List<Credential> get _credentials => _credentialsNotifier.value;
+
+  /// List of actual credentials.
+  @override
+  ValueNotifier<List<Credential>> get credentials => _credentialsNotifier;
+
   @override
   Future<CredentialsResult> loadCredentials({
     String? search,
@@ -52,14 +66,23 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
     String? order = 'ASC',
   }) async {
     try {
-      final credentials = await _provider.loadCredentials(
-        search: search,
-        limit: limit,
-        offset: offset,
-        orderBy: orderBy,
-        order: order,
+      if (_credentials.isEmpty) {
+        _credentialsNotifier.value = (await _provider.loadCredentials(
+          limit: 100000,
+        ))
+            .sortedBy((item) => item.name);
+      }
+      return CredentialsResult$Success(
+        credentials: _credentials
+            .where(
+              (item) =>
+                  item.name.contains(search ?? '') ||
+                  item.url.contains(search ?? '') ||
+                  item.username.contains(search ?? '') ||
+                  item.comment.contains(search ?? ''),
+            )
+            .toList(),
       );
-      return CredentialsResult$Success(credentials: credentials);
     } catch (e, st) {
       l.e(e, st);
       return CredentialsResult$Failure(error: e, stackTrace: st);
@@ -69,6 +92,13 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
   @override
   Future<CredentialsResult> loadCredential(int id) async {
     try {
+      if (_credentials.isNotEmpty) {
+        final credential =
+            _credentials.firstWhereOrNull((item) => item.id == id);
+        return CredentialsResult$Success(
+          credentials: credential == null ? [] : [credential],
+        );
+      }
       final credential = await _provider.loadCredential(id);
       return CredentialsResult$Success(
         credentials: credential == null ? [] : [credential],
@@ -84,8 +114,22 @@ class CredentialsRepositoryImpl implements CredentialsRepository {
     try {
       credential
         ..abbr = credential.generateAbbr()
-        ..color = credential.generateColor();
+        ..color = credential.color.isNotEmpty
+            ? credential.color
+            : credential.generateColor();
       final updatedCredential = await _provider.saveCredential(credential);
+      // Update local credentials list.
+      if (credential.id == null) {
+        _credentialsNotifier.value =
+            [..._credentials, updatedCredential].sortedBy((item) => item.name);
+      } else {
+        _credentialsNotifier.value = _credentials.map((item) {
+          if (item.id == credential.id) {
+            return updatedCredential;
+          }
+          return item;
+        }).sortedBy((item) => item.name);
+      }
       return CredentialsResult$Success(credentials: [updatedCredential]);
     } catch (e, st) {
       l.e(e, st);
